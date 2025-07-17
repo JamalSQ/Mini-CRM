@@ -7,12 +7,12 @@ use Illuminate\Http\Request;
 
 class TaskController extends Controller
 {
-    /**
+   /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        return view('tasks.index');
     }
 
     /**
@@ -20,7 +20,7 @@ class TaskController extends Controller
      */
     public function create()
     {
-        //
+        return view('tasks.create');
     }
 
     /**
@@ -28,7 +28,7 @@ class TaskController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return "task created successfully";
     }
 
     /**
@@ -36,7 +36,7 @@ class TaskController extends Controller
      */
     public function show(Task $task)
     {
-        //
+        return view('tasks.show');
     }
 
     /**
@@ -44,7 +44,7 @@ class TaskController extends Controller
      */
     public function edit(Task $task)
     {
-        //
+        return view('tasks.edit');
     }
 
     /**
@@ -52,7 +52,7 @@ class TaskController extends Controller
      */
     public function update(Request $request, Task $task)
     {
-        //
+        return "task updated successfully";
     }
 
     /**
@@ -60,6 +60,6 @@ class TaskController extends Controller
      */
     public function destroy(Task $task)
     {
-        //
+        return "task deleted successfully";
     }
 }

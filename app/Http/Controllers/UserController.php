@@ -2,18 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Client;
+use App\Models\User;
 use Illuminate\Http\Request;
 
-class ClientController extends Controller
+class UserController extends Controller
 {
-    /**
+     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $clients = Client::all();
-        return view('clients.index',compact($clients));
+        return view('users.index');
     }
 
     /**
@@ -21,7 +20,7 @@ class ClientController extends Controller
      */
     public function create()
     {
-        return view('clients.create');
+        return view('users.create');
     }
 
     /**
@@ -29,38 +28,38 @@ class ClientController extends Controller
      */
     public function store(Request $request)
     {
-        return "client created successfully";
+        return "user created successfully";
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Client $client)
+    public function show(User $user)
     {
-        return view('clients.show');
+        return view('users.show');
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Client $client)
+    public function edit(User $user)
     {
-        return view('clients.edit');
+        return view('users.edit');
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Client $client)
+    public function update(Request $request, User $user)
     {
-        return "client updated successfully";
+        return "user updated successfully";
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Client $client)
+    public function destroy(User $user)
     {
-        return "client deleted successfully";
+        return "user deleted successfully";
     }
 }

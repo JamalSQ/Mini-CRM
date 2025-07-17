@@ -12,7 +12,7 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        //
+        return view('projects.index');
     }
 
     /**
@@ -20,7 +20,7 @@ class ProjectController extends Controller
      */
     public function create()
     {
-        //
+        return view('projects.create');
     }
 
     /**
@@ -28,7 +28,7 @@ class ProjectController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return "project created successfully";
     }
 
     /**
@@ -36,15 +36,15 @@ class ProjectController extends Controller
      */
     public function show(Project $project)
     {
-        //
+        return view('projects.show');
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Project $project)
+    public function edit(Project $client)
     {
-        //
+        return view('projects.edit');
     }
 
     /**
@@ -52,7 +52,7 @@ class ProjectController extends Controller
      */
     public function update(Request $request, Project $project)
     {
-        //
+        return "project updated successfully";
     }
 
     /**
@@ -60,6 +60,6 @@ class ProjectController extends Controller
      */
     public function destroy(Project $project)
     {
-        //
+        return "project deleted successfully";
     }
 }

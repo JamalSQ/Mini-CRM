@@ -2,7 +2,7 @@
 <div class="container py-5">
   <div class="d-flex justify-content-between align-items-center mb-4">
     <h2>Clients <span class="badge bg-secondary" id="client-count">0</span></h2>
-    <a href="{{route('clients.create')}}" class="btn btn-primary">
+    <a href="{{route('projects.create')}}" class="btn btn-primary">
       <i class="fas fa-plus me-2"></i> Add Client
     </a>
   </div>
@@ -22,13 +22,6 @@
       </thead>
       <tbody id="clients-table-body">
         <!-- Client rows inserted here dynamically -->
-        @if(!empty($clients))
-         @foreach($clients as $client)
-            <td>{$client->name}</td>
-         @endforeach
-        @elseif
-        <td>No data found</td>
-        @endif
       </tbody>
     </table>
   </div>
