@@ -11,11 +11,10 @@ class Client extends Model
     use SoftDeletes,HasFactory;
     
     protected $fillable = ['contact_name','contact_email','contact_phone_number',
-    'company_name','company_address','company_city','company_zip','company_VAT'
+    'company_name','company_address','company_city','company_zip','company_vat'
     ];
 
     protected $hidden = [''];
-
 
     protected function cast(): Array
     {

@@ -23,13 +23,13 @@ class UpdatedClientRequest extends FormRequest
     {
         return [
             "contact_name"=>["string","required","max:255"],
-            "contact_email"=>["required","unique:clients,contact_email".$this->client->id],
+            "contact_email"=>["required","unique:clients,contact_email,{$this->client->id}"],
             "contact_phone_number"=>["integer","required"],
             "company_name"=>["string","required","max:255"],
             "company_address"=>["string","required","max:255"],
             "company_city"=>["string","required","max:255"],
-            "companyu_zip"=>["integer","required"],
-            "company_vat"=>["integer","required"],
+            "company_zip"=>["string","required"],
+            "company_vat"=>["string","required"],
         ];
     }
 }

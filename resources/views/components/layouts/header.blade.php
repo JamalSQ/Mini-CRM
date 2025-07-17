@@ -1,4 +1,4 @@
-<header class="d-flex flex-wrap align-items-center justify-content-between py-3 px-4 bg-primary">
+<header class="d-flex flex-wrap align-items-center justify-content-between py-3 px-4 bg-primary position-relative">
   <!-- Left side: brand title -->
   <a href="#" class="text-white text-decoration-none fs-4 fw-bold">
     Brand Logo
@@ -22,4 +22,17 @@
       Sign-up
     </button>
   </div>
+
+  <!-- Alert box (hidden by default) -->
+ <div id="messageModal" class="message-modal position-fixed top-0 end-0 m-3 p-3 rounded shadow-sm" style="display: none;">
+  <div class="d-flex align-items-center">
+    <div id="messageIcon" class="me-2">
+      <!-- Icon injected by JS -->
+    </div>
+    <div id="messageText" class="text-white fw-semibold"></div>
+    <button type="button" class="btn-close btn-close-white ms-auto" aria-label="Close" onclick="hideMessageModal()"></button>
+  </div>
+</div>
+
+
 </header>
