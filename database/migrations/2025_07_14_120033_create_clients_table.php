@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string("company_address");
             $table->string("company_city");
             $table->string("company_zip");
-            $table->integer("company_vat");
+            $table->string("company_vat");
             $table->timestamps();
             $table->softDeletes();
         });

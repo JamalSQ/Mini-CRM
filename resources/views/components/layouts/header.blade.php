@@ -1,38 +1,21 @@
-<header class="d-flex flex-wrap align-items-center justify-content-between py-3 px-4 bg-primary position-relative">
-  <!-- Left side: brand title -->
-  <a href="#" class="text-white text-decoration-none fs-4 fw-bold">
-    Brand Logo
-  </a>
+<header class="navbar navbar-expand-lg navbar-light bg-white shadow-sm py-2 px-4">
+  <div class="container-fluid">
+    <!-- Brand -->
+    <a href="{{ route('home') }}" class="navbar-brand fw-bold text-primary fs-4">
+      <i class="fas fa-gem me-2"></i>BrandName
+    </a>
 
-  <!-- Right side: search + buttons -->
-  <div class="d-flex align-items-center gap-3">
-    <form class="d-flex" role="search" aria-label="Site Search">
-      <input 
-        class="form-control form-control-sm rounded-pill me-3" 
-        type="search" 
-        placeholder="Search..." 
-        aria-label="Search">
-    </form>
-
-    <button type="button" class="btn btn-outline-light btn-sm px-4">
-      Login
-    </button>
-
-    <button type="button" class="btn btn-warning btn-sm px-4">
-      Sign-up
-    </button>
-  </div>
-
-  <!-- Alert box (hidden by default) -->
- <div id="messageModal" class="message-modal position-fixed top-0 end-0 m-3 p-3 rounded shadow-sm" style="display: none;">
-  <div class="d-flex align-items-center">
-    <div id="messageIcon" class="me-2">
-      <!-- Icon injected by JS -->
+    <!-- Right Side: Auth/Welcome -->
+    <div class="d-flex align-items-center ms-auto gap-2">
+      @auth
+      <span class="fw-semibold text-secondary me-2">
+        Welcome, <span class="text-primary">{{ Auth()->user()->fullName }}</span>
+      </span>
+      <a href="{{ route('logout') }}" class="btn btn-outline-danger btn-sm">Logout</a>
+      @else
+      <a href="{{ route('login.form') }}" class="btn btn-outline-primary btn-sm">Login</a>
+      <a href="{{ route('register.form') }}" class="btn btn-primary btn-sm ms-1">Sign Up</a>
+      @endauth
     </div>
-    <div id="messageText" class="text-white fw-semibold"></div>
-    <button type="button" class="btn-close btn-close-white ms-auto" aria-label="Close" onclick="hideMessageModal()"></button>
   </div>
-</div>
-
-
 </header>

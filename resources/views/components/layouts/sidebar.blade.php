@@ -1,38 +1,40 @@
 <div class="row">
-  <div class="col-md-3">
-    <div class="d-flex flex-column flex-shrink-0 p-3 bg-light" style="width: 280px;">
+  <div class="col-md-2 p-0">
+    <div class="d-flex flex-column shadow-md flex-shrink-0 p-3 bg-light min-vh-100">
       <ul class="nav nav-pills flex-column mb-auto">
         <li class="nav-item">
-          <a href="{{Route('dashboard')}}" class="nav-link active" aria-current="page">
-            <i class="fas fa-tachometer-alt me-2"></i>
-            Dashboard
+          <a href="{{ route('dashboard') }}"
+            class="nav-link {{ request()->routeIs('dashboard') ? 'active' : 'link-dark' }}">
+            <i class="fas fa-tachometer-alt me-2"></i> Dashboard
           </a>
         </li>
         <li>
-          <a href="{{Route('users.index')}}" class="nav-link link-dark">
-            <i class="fas fa-users me-2"></i>
-            Users
+          <a href="{{ route('users.index') }}"
+            class="nav-link {{ request()->routeIs('users.*') ? 'active' : 'link-dark' }}">
+            <i class="fas fa-users me-2"></i> Users
+          </a>
+        </li>
+
+        <li>
+          <a href="{{ route('clients.index') }}"
+            class='nav-link {{ request()->routeIs("clients.*") ? "active" : "link-dark" }}'>
+            <i class="fas fa-handshake me-2"></i> Clients
           </a>
         </li>
         <li>
-          <a href="{{Route('clients.index')}}" class="nav-link link-dark">
-            <i class="fas fa-handshake me-2"></i>
-            Clients
+          <a href="{{ route('projects.index') }}"
+            class="nav-link {{ request()->routeIs('projects.*') ? 'active' : 'link-dark' }}">
+            <i class="fas fa-folder-open me-2"></i> Projects
           </a>
         </li>
         <li>
-          <a href="{{Route('projects.index')}}" class="nav-link link-dark">
-            <i class="fas fa-folder-open me-2"></i>
-            Projects
-          </a>
-        </li>
-        <li>
-          <a href="{{Route('tasks.index')}}" class="nav-link link-dark">
-            <i class="fas fa-tasks me-2"></i>
-            Tasks
+          <a href="{{ route('tasks.index') }}"
+            class="nav-link {{ request()->routeIs('tasks.*') ? 'active' : 'link-dark' }}">
+            <i class="fas fa-tasks me-2"></i> Tasks
           </a>
         </li>
       </ul>
+
       <hr>
       <div class="dropdown">
         <a href="#" class="d-flex align-items-center link-dark text-decoration-none dropdown-toggle" id="dropdownUser2" data-bs-toggle="dropdown" aria-expanded="false">
@@ -43,7 +45,9 @@
           <li><a class="dropdown-item" href="#">New project...</a></li>
           <li><a class="dropdown-item" href="#">Settings</a></li>
           <li><a class="dropdown-item" href="#">Profile</a></li>
-          <li><hr class="dropdown-divider"></li>
+          <li>
+            <hr class="dropdown-divider">
+          </li>
           <li><a class="dropdown-item" href="#">Sign out</a></li>
         </ul>
       </div>

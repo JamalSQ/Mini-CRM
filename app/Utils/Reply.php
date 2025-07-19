@@ -4,19 +4,22 @@ namespace App\Utils;
 
 class Reply{
 
-    public static function success($message,$status){
+    public static function success($message,$status,$redirectUrl="/"){
         return ([
             "message" => $message,
             "status"  => $status,
             "color"   => "success",
+            "redirect" => $redirectUrl,
         ]);
     }
 
-    public static function error($message,$status){
+    public static function error($message,$status=422,$redirectUrl="/",$errors,){
         return ([
-            "message" => $message,
-            "status"  => $status,
-            "color"   => "error",
+            "message"  => $message,
+            "status"   => $status,
+            "redirect" => $redirectUrl,
+            "errors"   => $errors,
+            "color"    => "error",
         ]);
     }
 
@@ -36,7 +39,7 @@ class Reply{
         ]);
     }
 
-    
+
     public static function errorWithData($message,$errors,$status){
         return ([
             "message" => $message,
@@ -46,5 +49,20 @@ class Reply{
         ]);
     }
 
-    
+    private static function formatResponse(string $type, string $message, int $status, string $redirectUrl = null): array
+    {
+        $response = [
+            'message' => $message,
+            'status'  => $status,
+            'color'   => $type,
+        ];
+
+        if ($redirectUrl) {
+            $response['redirect'] = $redirectUrl;
+        }
+
+        return $response;
+    }
+
+
 }

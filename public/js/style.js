@@ -1,4 +1,4 @@
-function showMessageModal(message, type = 'info', timeout = 4000) {
+function showMessageModal(message, type = 'info',redirectRoute, timeout = 1000) {
   /*
     type: 'info' (blue), 'success' (green), 'error' (red), 'warning' (yellow)
   */
@@ -36,21 +36,47 @@ function showMessageModal(message, type = 'info', timeout = 4000) {
   modal.style.display = 'block';
   modal.classList.add('show');
 
+  console.log(redirectRoute);
+
   if (timeout > 0) {
     setTimeout(() => {
-      hideMessageModal();
+        hideMessageModal(redirectRoute);
+        window.location = redirectRoute;
     }, timeout);
   }
 }
 
-function hideMessageModal() {
+function hideMessageModal(redirectRoute) {
   const modal = document.getElementById('messageModal');
   modal.classList.remove('show');
   modal.classList.add('hide');
-
+  console.log("redirect route: ",redirectRoute);
+  
   // Wait for fade-out animation (300ms), then hide completely
   setTimeout(() => {
-    modal.style.display = 'none';
-    modal.classList.remove('hide');
+      modal.style.display = 'none';
+      modal.classList.remove('hide');
+
   }, 300);
 }
+
+ (function () {
+    'use strict'
+
+    // Fetch all the forms we want to apply custom Bootstrap validation styles to
+    var forms = document.querySelectorAll('.needs-validation')
+
+    // Loop over them and prevent submission
+    Array.prototype.slice.call(forms)
+        .forEach(function (form) {
+            form.addEventListener('submit', function (event) {
+                if (!form.checkValidity()) {
+                    event.preventDefault()
+                    event.stopPropagation()
+                }
+
+                form.classList.add('was-validated')
+            }, false)
+        })
+})()
+

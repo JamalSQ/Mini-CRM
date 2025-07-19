@@ -1,40 +1,72 @@
+body {
+    /* padding: 5px; */
+    overflow-x: hidden;
+    align-items: center;
+    font-family: "Montserrat", Arial, sans-serif;
+    background: linear-gradient(120deg, #e0e7ef 0%, #e0eafc 100%);
+    min-height: 100vh;
+}
+/* *{
+    padding: 0px;
+    border: 1px solid red;
+} */
+a {
+    text-decoration: none;
+}
+
+#home-collapse,
+#dashboard-collapse,
+#orders-collapse > ul > li > a {
+    margin-left: 20px;
+    text-decoration: none;
+}
+#home-collapse > ul > li > a:hover,
+#dashboard-collapse > ul > li > a:hover,
+#orders-collapse > ul > li > a:hover {
+    background-color: rgb(111 177 116 / 45%);
+    padding: 5px;
+}
 .message-modal {
-  min-width: 280px;
-  max-width: 400px;
-  background: #0d6efd; /* Bootstrap primary blue */
-  box-shadow: 0 0.25rem 0.75rem rgba(13, 110, 253, 0.3);
-  animation-duration: 0.3s;
-  animation-fill-mode: forwards;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  z-index: 1080;
+    min-width: 280px;
+    max-width: 400px;
+    background: #0d6efd; /* Bootstrap primary blue */
+    box-shadow: 0 0.25rem 0.75rem rgba(13, 110, 253, 0.3);
+    animation-duration: 0.3s;
+    animation-fill-mode: forwards;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    z-index: 1080;
 }
 
 .message-modal.show {
-  animation-name: fadeInSlideIn;
+    animation-name: fadeInSlideIn;
 }
 
 .message-modal.hide {
-  animation-name: fadeOutSlideOut;
+    animation-name: fadeOutSlideOut;
 }
 
 @keyframes fadeInSlideIn {
-  0% {
-    opacity: 0;
-    transform: translateX(100%);
-  }
-  100% {
-    opacity: 1;
-    transform: translateX(0);
-  }
+    0% {
+        opacity: 0;
+        transform: translateX(100%);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
 }
 
 @keyframes fadeOutSlideOut {
-  0% {
-    opacity: 1;
-    transform: translateX(0);
-  }
-  100% {
-    opacity: 0;
-    transform: translateX(100%);
-  }
+    0% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+    100% {
+        opacity: 0;
+        transform: translateX(100%);
+    }
+}
+
+body > div > div.col-md-3.p-0 > div > ul > li > a:hover {
+    background-color: #0d6efd9c;
 }

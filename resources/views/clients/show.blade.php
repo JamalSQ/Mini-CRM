@@ -1,55 +1,97 @@
 <x-layouts.app>
-<div class="container py-5">
+  <div class="row justify-content-center m-5">
+    <div class="col-12 col-md-12 col-lg-12">
+      <!-- Breadcrumb navigation -->
+      <nav aria-label="breadcrumb" class="mb-4">
+        <ol class="breadcrumb small bg-white px-2 py-2 rounded-2 shadow-sm">
+          <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Home</a></li>
+          <li class="breadcrumb-item"><a href="{{ route('clients.index') }}">Clients</a></li>
+          <li class="breadcrumb-item active" aria-current="page">View</li>
+        </ol>
+      </nav>
 
-  {{-- Flash Message Toast --}}
-  @if(session('success') || session('error'))
-  <div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 1055;">
-    <div class="toast align-items-center text-white bg-{{ session('success') ? 'success' : 'danger' }} border-0 show" role="alert">
-      <div class="d-flex">
-        <div class="toast-body">
-          {{ session('success') ?? session('error') }}
+      {{-- Flash Message Toast --}}
+      @if(session('success') || session('error'))
+      <div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 1055;">
+        <div class="toast align-items-center text-white bg-{{ session('success') ? 'success' : 'danger' }} border-0 show" role="alert">
+          <div class="d-flex">
+            <div class="toast-body">
+              {{ session('success') ?? session('error') }}
+            </div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+          </div>
         </div>
-        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+      </div>
+      @endif
+
+      <div class="card border-0 shadow-lg rounded-4 position-relative overflow-hidden" style="border-left: 6px solid #0d6efd;">
+        <div class="row g-0">
+          <div class="col-12 col-md-4 d-flex flex-column align-items-center justify-content-center bg-white py-4 px-3 border-end">
+            <div class="bg-primary bg-gradient rounded-circle d-flex align-items-center justify-content-center mb-3" style="width: 80px; height: 80px;">
+              <i class="fa-solid fa-user fa-2x text-white"></i>
+            </div>
+            <h3 class="h5 fw-bold text-primary mb-1 text-center">{{ $client->contact_name }}</h3>
+            <div class="text-muted small text-center mb-2">Contact Person</div>
+            <div class="d-flex flex-column gap-2 w-100 align-items-center">
+              <a href="mailto:{{ $client->contact_email }}" class="text-decoration-none small"><i class="fa-solid fa-envelope me-1"></i> {{ $client->contact_email }}</a>
+              <a href="tel:{{ $client->contact_phone_number }}" class="text-decoration-none small"><i class="fa-solid fa-phone me-1"></i> {{ $client->contact_phone_number }}</a>
+            </div>
+          </div>
+          <div class="col-12 col-md-8 bg-light p-4">
+            <div class="d-flex justify-content-end mb-2 gap-2">
+              <a href="{{ route('clients.edit', $client->id) }}" class="btn btn-primary btn-sm px-3 shadow-sm">
+                <i class="fas fa-edit me-1"></i> Edit
+              </a>
+              <a href="{{ route('clients.index') }}" class="btn btn-outline-secondary btn-sm px-3 shadow-sm">
+                <i class="fas fa-arrow-left me-1"></i> Back
+              </a>
+            </div>
+            <div class="row g-3">
+              <div class="col-12">
+                <h6 class="fw-semibold text-secondary mb-2">Company Information</h6>
+              </div>
+              <div class="col-12 col-md-6">
+                <div class="bg-white rounded-3 p-3 h-100 shadow-sm">
+                  <div class="mb-2 small text-muted">Company Name</div>
+                  <div class="fw-semibold">{{ $client->company_name }}</div>
+                </div>
+              </div>
+              <div class="col-12 col-md-6">
+                <div class="bg-white rounded-3 p-3 h-100 shadow-sm">
+                  <div class="mb-2 small text-muted">Company Address</div>
+                  <div class="fw-semibold">{{ $client->company_address }}</div>
+                </div>
+              </div>
+              <div class="col-12 col-md-4">
+                <div class="bg-white rounded-3 p-3 h-100 shadow-sm">
+                  <div class="mb-2 small text-muted">City</div>
+                  <div class="fw-semibold">{{ $client->company_city }}</div>
+                </div>
+              </div>
+              <div class="col-12 col-md-4">
+                <div class="bg-white rounded-3 p-3 h-100 shadow-sm">
+                  <div class="mb-2 small text-muted">ZIP</div>
+                  <div class="fw-semibold">{{ $client->company_zip }}</div>
+                </div>
+              </div>
+              <div class="col-12 col-md-4">
+                <div class="bg-white rounded-3 p-3 h-100 shadow-sm">
+                  <div class="mb-2 small text-muted">VAT Number</div>
+                  <div class="fw-semibold">{{ $client->company_vat }}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
-  @endif
-
-  <h2 class="mb-4">Client Details</h2>
-
-  <div class="card shadow-sm border-0" style="max-width: 600px;">
-    <div class="card-body">
-      <h4 class="card-title mb-3 text-primary">{{ $client->contact_name }}</h4>
-
-      <ul class="list-group list-group-flush mb-4">
-        <li class="list-group-item"><strong>Contact Email:</strong> {{ $client->contact_email }}</li>
-        <li class="list-group-item"><strong>Contact Phone:</strong> {{ $client->contact_phone_number }}</li>
-        <li class="list-group-item"><strong>Company Name:</strong> {{ $client->company_name }}</li>
-        <li class="list-group-item"><strong>Company Address:</strong> {{ $client->company_address }}</li>
-        <li class="list-group-item"><strong>City:</strong> {{ $client->company_city }}</li>
-        <li class="list-group-item"><strong>ZIP:</strong> {{ $client->company_zip }}</li>
-        <li class="list-group-item"><strong>VAT Number:</strong> {{ $client->company_vat }}</li>
-      </ul>
-
-      <div class="d-flex">
-        <a href="{{ route('clients.edit', $client->id) }}" class="btn btn-primary me-2">
-          <i class="fas fa-edit me-1"></i> Edit
-        </a>
-        <a href="{{ route('clients.index') }}" class="btn btn-secondary">
-          <i class="fas fa-arrow-left me-1"></i> Back to list
-        </a>
-      </div>
-    </div>
-  </div>
-</div>
-
-{{-- Optional: Bootstrap Toast script (if not already globally included) --}}
-<script>
-  document.addEventListener('DOMContentLoaded', function () {
-    const toastEl = document.querySelector('.toast');
-    if (toastEl) {
-      new bootstrap.Toast(toastEl).show();
-    }
-  });
-</script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const toastEl = document.querySelector('.toast');
+      if (toastEl) {
+        new bootstrap.Toast(toastEl).show();
+      }
+    });
+  </script>
 </x-layouts.app>
