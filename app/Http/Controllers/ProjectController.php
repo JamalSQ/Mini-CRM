@@ -2,8 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\ProjectStatus;
+use App\Http\Requests\StoreProjectRequest;
 use App\Models\Project;
 use Illuminate\Http\Request;
+use App\Utils\Reply;
+use App\Models\Client;
+use App\Models\User;
 
 class ProjectController extends Controller
 {
@@ -12,7 +17,8 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        return view('projects.index');
+        $projects = Project::with(['user', 'client'])->get();
+        return view('projects.index', ['projects' => $projects]);
     }
 
     /**
@@ -20,7 +26,11 @@ class ProjectController extends Controller
      */
     public function create()
     {
-        return view('projects.create');
+        $clients = Client::all();
+        $Users =  User::all();
+        $status = ProjectStatus::cases();
+
+        return view('projects.create', ['clients' => $clients, 'users' => $Users, 'statuses' => $status]);
     }
 
     /**
@@ -28,7 +38,24 @@ class ProjectController extends Controller
      */
     public function store(Request $request)
     {
-        return "project created successfully";
+        // dd($request);
+        $data = [
+            'title' => $request->title,
+            'description' => $request->description,
+            'client_id' => $request->clientId,
+            'user_id' => $request->userId,
+            'deadline' => $request->deadline,
+            'status' => $request->status,
+        ];
+
+        // dd($data);
+
+        try {
+            Project::create($data);
+            Reply::success("Project created successfully", 200, route('project.index'));
+        } catch (\Exception $e) {
+            Reply::success("Project created successfully", 200, $e->getMessage());
+        }
     }
 
     /**

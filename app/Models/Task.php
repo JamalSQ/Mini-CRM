@@ -2,42 +2,46 @@
 
 namespace App\Models;
 
-use Attribute;
+use App\Enums\TaskStatus;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Casts\Attribute;
+
+
 class Task extends Model
 {
-    use SoftDeletes,HasFactory;
+    use SoftDeletes, HasFactory;
 
-    protected $fillable = ['title','description','deadline','client_id','project_id','user_id','status'];
+    protected $fillable = ['title', 'description', 'deadline', 'client_id', 'project_id', 'user_id', 'status'];
 
-    protected function caste():Array
+    protected function caste(): array
     {
         return [
-            'deadline'=>'datetime',
+            'status' => TaskStatus::class,
+            'deadline' => 'datetime',
         ];
     }
 
-    public function title():Attribute
+    public function title(): Attribute
     {
         return new Attribute(
-            get: fn($value)=>ucfirst($value),
+            get: fn($value) => ucfirst($value),
         );
     }
 
-    protected function project():BelongsTo
+    protected function project(): BelongsTo
     {
         return $this->belongsTo(project::class);
     }
 
-    protected function client():BelongsTo
+    protected function client(): BelongsTo
     {
         return $this->belongsTo(client::class);
     }
 
-    protected function user():BelongsTo
+    protected function user(): BelongsTo
     {
         return $this->belongsTo(user::class);
     }

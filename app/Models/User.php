@@ -14,7 +14,7 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable,SoftDeletes;
+    use HasFactory, Notifiable, SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -51,23 +51,23 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
-            'terms_accepted_at'=>'datetime'
+            'terms_accepted_at' => 'datetime'
         ];
     }
 
-    protected function fullName():Attribute
+    protected function fullName(): Attribute
     {
         return new Attribute(
-            get: fn()=>$this->first_name." ".$this->last_name,
+            get: fn() => $this->first_name . " " . $this->last_name,
         );
     }
 
-    protected function task():HasMany
+    protected function task(): HasMany
     {
         return $this->hasMany(task::class);
     }
 
-    protected function project():HasMany
+    protected function project(): HasMany
     {
         return $this->hasMany(project::class);
     }

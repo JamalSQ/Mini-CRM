@@ -70,3 +70,9 @@ a {
 body > div > div.col-md-3.p-0 > div > ul > li > a:hover {
     background-color: #0d6efd9c;
 }
+
+.slectboxdesign {
+    border: 1px solid #ced4da;
+    padding: 14px;
+    border-radius: 4px;
+}

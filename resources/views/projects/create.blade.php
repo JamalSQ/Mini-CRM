@@ -32,7 +32,7 @@
                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
                         @endif
-                        <form method="POST" class="needs-validation ajax-form" novalidate>
+                        <form method="POST" action="{{route('projects.store')}}" class="needs-validation ajax-form" novalidate>
                             @csrf
                             <h6 class="mb-2 text-secondary fw-semibold">Project Details</h6>
                             <div class="row mb-2">
@@ -53,22 +53,46 @@
                             </div>
                             <div class="row mb-2">
                                 <div class="col-md-4 mb-2 mb-md-0">
-                                    <div class="form-floating">
-                                        <input type="text" class="form-control form-control-sm @error('clientId') is-invalid @enderror" id="clientId" name="clientId" placeholder="Client ID" required>
-                                        <label for="clientId">Client ID</label>
-                                        @error('clientId')<div class="invalid-feedback small">{{$message}}</div>@enderror
+                                    <div class="slectboxdesign">
+                                        <select name="clientId" id="clientId" name="clientId" style="border:1px solid gray;" class="p-5 form-control form-control-sm form-select @error('clientId') is-invalid @enderror" required>
+                                            <option value="" selected disabled>Select Client</option>
+                                            @foreach($clients as $client)
+                                            <option
+                                                value="{{ $client->id }}"
+                                                data-contact-name="{{ $client->contact_name }}"
+                                                data-company-name="{{ $client->company_name }}">
+                                                {{ $client->contact_name }} ({{ $client->company_name }})
+                                            </option>
+                                            @endforeach
+                                        </select>
+                                        @error('clientId')
+                                        <div class="invalid-feedback small">{{ $message }}</div>
+                                        @else
+                                        <div class="invalid-feedback">Please select a client.</div>
+                                        @enderror
                                     </div>
                                 </div>
                                 <div class="col-md-4 mb-2 mb-md-0">
                                     <div class="form-floating">
-                                        <input type="text" class="form-control form-control-sm @error('userId') is-invalid @enderror" id="userId" name="userId" placeholder="User ID" required>
-                                        <label for="userId">User ID</label>
-                                        @error('userId')<div class="invalid-feedback small">{{$message}}</div>@enderror
+                                        <select name="userId" id="userId" name="userId" class="form-select @error('userId') is-invalid @enderror" required>
+                                            <option value="" selected disabled>Select User</option>
+                                            @foreach($users as $user)
+                                            <option value="{{ $user->id }}">
+                                                {{ $user->fullName }}
+                                            </option>
+                                            @endforeach
+                                        </select>
+                                        <label for="userId">Assigned User</label>
+                                        @error('userId')
+                                        <div class="invalid-feedback small">{{ $message }}</div>
+                                        @else
+                                        <div class="invalid-feedback">Please select a user.</div>
+                                        @enderror
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-floating">
-                                        <input type="text" class="form-control form-control-sm @error('deadline') is-invalid @enderror" id="deadline" name="deadline" placeholder="Deadline" required>
+                                        <input type="date" class="form-control form-control-sm @error('deadline') is-invalid @enderror" id="deadline" name="deadline" placeholder="Deadline" required>
                                         <label for="deadline">Deadline</label>
                                         @error('deadline')<div class="invalid-feedback small">{{$message}}</div>@enderror
                                     </div>
@@ -77,9 +101,20 @@
                             <div class="row mb-2">
                                 <div class="col-md-6 mb-2 mb-md-0">
                                     <div class="form-floating">
-                                        <input type="text" class="form-control form-control-sm @error('status') is-invalid @enderror" id="status" name="status" placeholder="Status" required>
-                                        <label for="status">Status</label>
-                                        @error('status')<div class="invalid-feedback small">{{$message}}</div>@enderror
+                                        <select name="status" id="userId" class="form-select @error('status') is-invalid @enderror" required>
+                                            <option value="" selected disabled>Select Status</option>
+                                            @foreach($statuses as $status)
+                                            <option value="{{ $status->name }}">
+                                                {{ $status->value }}
+                                            </option>
+                                            @endforeach
+                                        </select>
+                                        <label for="userId">Assigned Status</label>
+                                        @error('status')
+                                        <div class="invalid-feedback small">{{ $message }}</div>
+                                        @else
+                                        <div class="invalid-feedback">Please select a status.</div>
+                                        @enderror
                                     </div>
                                 </div>
                             </div>
