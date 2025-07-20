@@ -38,7 +38,6 @@ class ProjectController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request);
         $data = [
             'title' => $request->title,
             'description' => $request->description,
@@ -48,13 +47,11 @@ class ProjectController extends Controller
             'status' => $request->status,
         ];
 
-        // dd($data);
-
         try {
             Project::create($data);
-            Reply::success("Project created successfully", 200, route('project.index'));
+            return Reply::success("Project created successfully", 200, route('projects.index'));
         } catch (\Exception $e) {
-            Reply::success("Project created successfully", 200, $e->getMessage());
+            return Reply::success("Project created successfully", 200, $e->getMessage());
         }
     }
 

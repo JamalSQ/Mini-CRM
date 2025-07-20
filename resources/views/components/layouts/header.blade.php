@@ -5,6 +5,8 @@
       <i class="fas fa-gem me-2"></i>BrandName
     </a>
 
+    
+
     <!-- Right Side: Auth/Welcome -->
     <div class="d-flex align-items-center ms-auto gap-2">
       @auth
@@ -18,4 +20,17 @@
       @endauth
     </div>
   </div>
+
+   <div
+        id="messageModal"
+        class="message-modal position-fixed hide top-0 end-0 m-3 p-3 rounded text-white shadow-lg d-flex align-items-center justify-content-start"
+        style="display:none !important; z-index:999;"
+        role="alert"
+       
+      >
+        <div id="messageIcon" class="me-2">
+        </div>
+        <div id="messageText" class="flex-grow-1">
+        </div>
+      </div>
 </header>

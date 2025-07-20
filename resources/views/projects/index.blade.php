@@ -12,7 +12,8 @@
                 <div class="card border-0 shadow-sm rounded-3">
                     <div class="card-header bg-white border-bottom d-flex justify-content-between align-items-center py-2 px-3">
                         <h2 class="h5 mb-0 fw-bold text-primary">
-                            Projects
+                            Projects 
+                            <span class="badge bg-light text-primary ms-2" id="client-count">{{ count($projects) }}</span>
                         </h2>
                         <a href="{{route('projects.create')}}" class="btn btn-outline-primary btn-sm fw-semibold px-3">
                             <i class="fas fa-plus me-1"></i> Add Project
@@ -37,7 +38,7 @@
                         </div>
                         @endif
                         <div class="table-responsive">
-                            <table class="table table-sm table-hover align-middle mb-0">
+                            <table class="table table-sm table-hover align-middle mb-0" id="Project-table">
                                 <thead class="table-light small">
                                     <tr>
                                         <th>#</th>

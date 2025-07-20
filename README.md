@@ -1,61 +1,98 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Laravel CRM Using Blade
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+A modern, user-friendly Customer Relationship Management (CRM) system built with Laravel 12 and Blade templates. This project provides a complete solution for managing clients, projects, tasks, and users, with a beautiful UI and robust backend.
 
-## About Laravel
+## Features
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+-   **Authentication**: Secure login and registration system.
+-   **Dashboard**: Overview of users, clients, projects, and tasks with summary cards.
+-   **Client Management**: Add, edit, view, and delete clients. Store company, contact, email, and phone details.
+-   **Project Management**: Create, assign, and track projects. Link projects to clients and users, set deadlines, and manage statuses.
+-   **Task Management**: Organize tasks by project, client, and user. Track deadlines and statuses.
+-   **User Management**: Manage users with CRUD operations.
+-   **Responsive UI**: Built with Bootstrap 5 and custom styles for a clean, modern look.
+-   **Notifications**: Modal-based feedback for actions (success, error, etc.).
+-   **Role-based Access**: (Planned) Extendable for admin/user roles.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Tech Stack
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+-   **Backend**: Laravel 12 (PHP 8.2+)
+-   **Frontend**: Blade templates, Bootstrap 5, Font Awesome
+-   **JS/CSS**: Custom JavaScript, Tailwind CSS (via Vite), custom styles
+-   **Database**: MySQL (default, configurable)
+-   **Build Tools**: Vite, Laravel Mix
 
-## Learning Laravel
+## Directory Structure
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+-   `app/Models/` — Eloquent models for User, Client, Project, Task
+-   `app/Http/Controllers/` — RESTful controllers for each module
+-   `resources/views/` — Blade templates for all pages and components
+-   `public/` — Public assets (CSS, JS, images)
+-   `routes/web.php` — Main web routes
+-   `database/migrations/` — Database schema
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+## Getting Started
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### Prerequisites
 
-## Laravel Sponsors
+-   PHP 8.2+
+-   Composer
+-   Node.js & npm
+-   MySQL or compatible database
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+### Installation
 
-### Premium Partners
+1. **Clone the repository:**
+    ```bash
+    git clone <your-repo-url>
+    cd LaravelCRMUsingblade
+    ```
+2. **Install PHP dependencies:**
+    ```bash
+    composer install
+    ```
+3. **Install JS dependencies:**
+    ```bash
+    npm install
+    ```
+4. **Copy and configure environment:**
+    ```bash
+    cp .env.example .env
+    # Edit .env for your DB and mail settings
+    ```
+5. **Generate app key:**
+    ```bash
+    php artisan key:generate
+    ```
+6. **Run migrations:**
+    ```bash
+    php artisan migrate
+    ```
+7. **Start the dev server:**
+    ```bash
+    npm run dev
+    php artisan serve
+    ```
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+Visit [http://localhost:8000](http://localhost:8000) to get started.
+
+## Usage
+
+-   Register or log in to access the dashboard.
+-   Use the sidebar to navigate between Clients, Projects, Tasks, and Users.
+-   Add, edit, or delete records as needed.
+-   Dashboard provides a quick overview of your CRM data.
+
+## Customization
+
+-   **Styling:** Modify `public/css/style.css` or use Tailwind classes in Blade files.
+-   **JS:** Add custom scripts in `public/js/style.js` or `public/js/custom.js`.
+-   **Components:** Reusable Blade components in `resources/views/components/`.
 
 ## Contributing
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+Pull requests are welcome! For major changes, please open an issue first to discuss what you would like to change.
 
 ## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+This project is open-sourced under the MIT license.

@@ -58,7 +58,8 @@
 
     <script>
         $(document).ready(function() {
-            $('#clients-table').DataTable({
+            const TableIds = ['clients-table','Project-table'];
+            const commonDataTableOptions = {
                 "responsive": true,
                 "pageLength": 10,
                 "ordering": true,
@@ -66,8 +67,13 @@
                 "lengthChange": true,
                 "info": true,
                 "autoWidth": false
+            };
+            TableIds.forEach(function(id){
+                $('#'+id).DataTable(commonDataTableOptions);
             });
 
+
+      
             function formatClientOption(client) {
                 if (!client.id) {
                     return client.text;

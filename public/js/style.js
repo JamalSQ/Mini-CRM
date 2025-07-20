@@ -1,9 +1,4 @@
-function showMessageModal(
-    message,
-    type = "info",
-    redirectRoute,
-    timeout = 1000
-) {
+function showMessageModal(message,type = "info",redirectRoute,timeout = 1000) {
     /*
     type: 'info' (blue), 'success' (green), 'error' (red), 'warning' (yellow)
   */
@@ -51,8 +46,6 @@ function showMessageModal(
 
     modal.style.display = "block";
     modal.classList.add("show");
-
-    console.log(redirectRoute);
 
     if (timeout > 0) {
         setTimeout(() => {
