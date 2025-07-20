@@ -19,6 +19,8 @@ function ajaxFormSubmit(form) {
     // Clear previous errors
     clearFormErrors(form);
 
+    console.log(formData.toString());
+
     $.ajax({
         url: action,
         type: method,

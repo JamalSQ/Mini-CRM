@@ -24,9 +24,9 @@ class UpdatedTaskRequest extends FormRequest
         return [
             'title'=>['required','string','max:255'],
             'description'=>['required','string','max:255'],
-            'client_id'=>['required','exist:clients,id'],
-            'user_id'=>['required','exist:users,id'],
-            'project_id'=>['required','exist:projects,id'],
+            'client_id'=>['required','exists:clients,id'],
+            'user_id'=>['required','exists:users,id'],
+            'project_id'=>['required','exists:projects,id'],
             'deadline'=>['required','date'],
             'status'=>['required']
         ];

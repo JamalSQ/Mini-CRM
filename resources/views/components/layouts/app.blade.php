@@ -58,7 +58,7 @@
 
     <script>
         $(document).ready(function() {
-            const TableIds = ['clients-table','Project-table'];
+            const TableIds = ['clients-table', 'Project-table', 'tasks-table', 'users-table'];
             const commonDataTableOptions = {
                 "responsive": true,
                 "pageLength": 10,
@@ -68,12 +68,12 @@
                 "info": true,
                 "autoWidth": false
             };
-            TableIds.forEach(function(id){
-                $('#'+id).DataTable(commonDataTableOptions);
+            TableIds.forEach(function(id) {
+                $('#' + id).DataTable(commonDataTableOptions);
             });
 
 
-      
+
             function formatClientOption(client) {
                 if (!client.id) {
                     return client.text;

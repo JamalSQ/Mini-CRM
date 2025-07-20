@@ -1,4 +1,9 @@
-function showMessageModal(message,type = "info",redirectRoute,timeout = 1000) {
+function showMessageModal(
+    message,
+    type = "info",
+    redirectRoute,
+    timeout = 1000
+) {
     /*
     type: 'info' (blue), 'success' (green), 'error' (red), 'warning' (yellow)
   */
@@ -50,21 +55,22 @@ function showMessageModal(message,type = "info",redirectRoute,timeout = 1000) {
     if (timeout > 0) {
         setTimeout(() => {
             hideMessageModal(redirectRoute);
-            window.location = redirectRoute;
         }, timeout);
     }
 }
 
 function hideMessageModal(redirectRoute) {
     const modal = document.getElementById("messageModal");
-    modal.classList.remove("show");
-    modal.classList.add("hide");
+
     console.log("redirect route: ", redirectRoute);
 
     // Wait for fade-out animation (300ms), then hide completely
     setTimeout(() => {
+        modal.classList.remove("show");
+        modal.classList.add("hide");
         modal.style.display = "none";
         modal.classList.remove("hide");
+        window.location = redirectRoute;
     }, 300);
 }
 

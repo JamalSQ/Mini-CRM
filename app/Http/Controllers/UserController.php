@@ -2,17 +2,21 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreUserRequest;
+use App\Http\Requests\UpdatedUserRequest;
 use App\Models\User;
+use App\Utils\Reply;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
-     /**
+    /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return view('users.index');
+        $users = User::all();
+        return view('users.index', ['users' => $users]);
     }
 
     /**
@@ -26,9 +30,15 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request, StoreUserRequest $store_user_request)
     {
-        return "user created successfully";
+        try{
+            User::create($store_user_request->validated());
+            return Reply::success('User record created successfylly',200,route('users.index'));
+        }catch(\Exception $e){
+            return Reply::error('Unable to create user',422,route('users.index'),$e);
+        }
+
     }
 
     /**
@@ -36,7 +46,7 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        return view('users.show');
+        return view('users.show',['user'=>$user]);
     }
 
     /**
@@ -44,15 +54,20 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        return view('users.edit');
+        return view('users.edit',['user'=>$user]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, User $user)
+    public function update(Request $request, User $user, UpdatedUserRequest $updated_user_request)
     {
-        return "user updated successfully";
+        try{
+            User::create($updated_user_request->validated());
+            return Reply::success('User updated successfylly',200,route('users.index'));
+        }catch(\Exception $e){
+            return Reply::error('Unable to update user',422,route('users.index'),$e);
+        }
     }
 
     /**
@@ -60,6 +75,11 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        return "user deleted successfully";
+        try{
+            $user->delete();
+            return Reply::success("User deleted successfully",200,route('users.index'));
+        }catch(\Exception $e){
+            return Reply::error("unable to delete the user",422,route('users.index'),$e,);
+        }
     }
 }

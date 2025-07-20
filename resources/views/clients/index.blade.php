@@ -49,7 +49,7 @@
                                                 <a href="{{ route('clients.edit', $client->id) }}" class="btn btn-warning btn-xs px-2 py-1" title="Edit">
                                                     <i class="fas fa-edit"></i>
                                                 </a>
-                                                <form action="{{ route('clients.destroy', $client->id) }}" method="POST" class="d-inline delete-form">
+                                                <form action="{{ route('clients.destroy', $client->id) }}" method="POST" class="ajax-form d-inline delete-form">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="submit" class="btn btn-danger btn-xs px-2 py-1" title="Delete"

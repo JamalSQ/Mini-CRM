@@ -60,23 +60,41 @@ class ProjectController extends Controller
      */
     public function show(Project $project)
     {
-        return view('projects.show');
+        return view('projects.show', ['project' => $project]);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Project $client)
+    public function edit(Project $project)
     {
-        return view('projects.edit');
+        $clients = Client::all();
+        $Users =  User::all();
+        $status = ProjectStatus::cases();
+
+        return view('projects.edit', ['project' => $project, 'clients' => $clients, 'users' => $Users, 'statuses' => $status]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Project $project)
+    public function update(Request $request, Project $project, ProjectUpdateRequest $projectUpdateRequest)
     {
-        return "project updated successfully";
+        $data = [
+            'title' => $request->title,
+            'description' => $request->description,
+            'client_id' => $request->clientId,
+            'user_id' => $request->userId,
+            'deadline' => $request->deadline,
+            'status' => $request->status,
+        ];
+
+        try {
+            $project->update($data);
+            return Reply::success("Project updated successfully", 200, route('projects.index'));
+        } catch (\Exception $e) {
+            return Reply::success("Project updated successfully", 200, $e->getMessage());
+        }
     }
 
     /**
@@ -84,6 +102,11 @@ class ProjectController extends Controller
      */
     public function destroy(Project $project)
     {
-        return "project deleted successfully";
+        try {
+            $project->delete();
+            return Reply::success("Project deleted successfully", 200, route('projects.index'));
+        } catch (\Exception $e) {
+            return Reply::error("Project deleted successfully", 200, $e->getMessage(), route('projects.index'));
+        }
     }
 }

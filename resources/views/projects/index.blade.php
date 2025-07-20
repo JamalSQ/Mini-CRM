@@ -12,7 +12,7 @@
                 <div class="card border-0 shadow-sm rounded-3">
                     <div class="card-header bg-white border-bottom d-flex justify-content-between align-items-center py-2 px-3">
                         <h2 class="h5 mb-0 fw-bold text-primary">
-                            Projects 
+                            Projects
                             <span class="badge bg-light text-primary ms-2" id="client-count">{{ count($projects) }}</span>
                         </h2>
                         <a href="{{route('projects.create')}}" class="btn btn-outline-primary btn-sm fw-semibold px-3">
@@ -71,7 +71,7 @@
                                                 <a href="{{route('projects.edit',$project->id)}}" class="btn btn-warning btn-xs px-2 py-1" title="Edit">
                                                     <i class="fas fa-edit"></i>
                                                 </a>
-                                                <form method="POST" action="{{route('projects.destroy',$project->id)}}" class="d-inline delete-form form-ajax">
+                                                <form method="POST" action="{{route('projects.destroy',$project->id)}}" class="d-inline delete-form ajax-form">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="submit" class="btn btn-danger btn-xs px-2 py-1" title="Delete">

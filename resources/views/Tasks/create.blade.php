@@ -2,11 +2,10 @@
     <div class="container pt-2">
         <div class="row justify-content-center">
             <div class="col-12 col-md-12 col-lg-12">
-                <!-- Breadcrumb navigation -->
                 <nav aria-label="breadcrumb" class="mb-3">
                     <ol class="breadcrumb small bg-white px-2 py-2 rounded-2 shadow-sm">
-                        <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item"><a href="#">Tasks</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Home</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('tasks.index') }}">Tasks</a></li>
                         <li class="breadcrumb-item active" aria-current="page">Add</li>
                     </ol>
                 </nav>
@@ -32,67 +31,86 @@
                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
                         @endif
-                        <form method="POST" class="needs-validation ajax-form" novalidate>
+                        <form action="{{ route('tasks.store') }}" method="POST" class="ajax-form">
                             @csrf
-                            <h6 class="mb-2 text-secondary fw-semibold">Task Details</h6>
                             <div class="row mb-2">
                                 <div class="col-md-6 mb-2 mb-md-0">
                                     <div class="form-floating">
-                                        <input type="text" class="form-control form-control-sm @error('title') is-invalid @enderror" id="title" name="title" placeholder="Title" required>
+                                        <input type="text" class="form-control form-control-sm @error('title') is-invalid @enderror" id="title" name="title" value="{{ old('title') }}" placeholder="Title" required>
                                         <label for="title">Title</label>
-                                        @error('title')<div class="invalid-feedback small">{{$message}}</div>@enderror
+                                        @error('title')<div class="invalid-feedback small">{{ $message }}</div>@enderror
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-floating">
-                                        <input type="text" class="form-control form-control-sm @error('description') is-invalid @enderror" id="description" name="description" placeholder="Description" required>
+                                        <input type="text" class="form-control form-control-sm @error('description') is-invalid @enderror" id="description" name="description" value="{{ old('description') }}" placeholder="Description" required>
                                         <label for="description">Description</label>
-                                        @error('description')<div class="invalid-feedback small">{{$message}}</div>@enderror
+                                        @error('description')<div class="invalid-feedback small">{{ $message }}</div>@enderror
                                     </div>
                                 </div>
                             </div>
                             <div class="row mb-2">
                                 <div class="col-md-4 mb-2 mb-md-0">
                                     <div class="form-floating">
-                                        <input type="text" class="form-control form-control-sm @error('clientId') is-invalid @enderror" id="clientId" name="clientId" placeholder="Client ID" required>
-                                        <label for="clientId">Client ID</label>
-                                        @error('clientId')<div class="invalid-feedback small">{{$message}}</div>@enderror
+                                        <select name="client_id" id="client_id" class="form-select @error('client_id') is-invalid @enderror" required>
+                                            <option value="" selected disabled>Select Client</option>
+                                            @foreach($clients as $client)
+                                            <option value="{{ $client->id }}">{{ $client->contact_name }} ({{ $client->company_name }})</option>
+                                            @endforeach
+                                        </select>
+                                        <label for="client_id">Client</label>
+                                        @error('client_id')<div class="invalid-feedback small">{{ $message }}</div>@enderror
                                     </div>
                                 </div>
                                 <div class="col-md-4 mb-2 mb-md-0">
                                     <div class="form-floating">
-                                        <input type="text" class="form-control form-control-sm @error('projectId') is-invalid @enderror" id="projectId" name="projectId" placeholder="Project ID" required>
-                                        <label for="projectId">Project ID</label>
-                                        @error('projectId')<div class="invalid-feedback small">{{$message}}</div>@enderror
+                                        <select name="project_id" id="project_id" class="form-select @error('project_id') is-invalid @enderror" required>
+                                            <option value="" selected disabled>Select Project</option>
+                                            @foreach($projects as $project)
+                                            <option value="{{ $project->id }}">{{ $project->title }}</option>
+                                            @endforeach
+                                        </select>
+                                        <label for="project_id">Project</label>
+                                        @error('project_id')<div class="invalid-feedback small">{{ $message }}</div>@enderror
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-floating">
-                                        <input type="text" class="form-control form-control-sm @error('userId') is-invalid @enderror" id="userId" name="userId" placeholder="User ID" required>
-                                        <label for="userId">User ID</label>
-                                        @error('userId')<div class="invalid-feedback small">{{$message}}</div>@enderror
+                                        <select name="user_id" id="user_id" class="form-select @error('user_id') is-invalid @enderror" required>
+                                            <option value="" selected disabled>Select User</option>
+                                            @foreach($users as $user)
+                                            <option value="{{ $user->id }}">{{ $user->first_name }} {{ $user->last_name }}</option>
+                                            @endforeach
+                                        </select>
+                                        <label for="user_id">Assigned User</label>
+                                        @error('user_id')<div class="invalid-feedback small">{{ $message }}</div>@enderror
                                     </div>
                                 </div>
                             </div>
                             <div class="row mb-2">
                                 <div class="col-md-6 mb-2 mb-md-0">
                                     <div class="form-floating">
-                                        <input type="text" class="form-control form-control-sm @error('deadline') is-invalid @enderror" id="deadline" name="deadline" placeholder="Deadline" required>
+                                        <input type="date" class="form-control form-control-sm @error('deadline') is-invalid @enderror" id="deadline" name="deadline" value="{{ old('deadline') }}" placeholder="Deadline" required>
                                         <label for="deadline">Deadline</label>
-                                        @error('deadline')<div class="invalid-feedback small">{{$message}}</div>@enderror
+                                        @error('deadline')<div class="invalid-feedback small">{{ $message }}</div>@enderror
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-floating">
-                                        <input type="text" class="form-control form-control-sm @error('status') is-invalid @enderror" id="status" name="status" placeholder="Status" required>
+                                        <select name="status" id="status" class="form-select @error('status') is-invalid @enderror" required>
+                                            <option value="" selected disabled>Select Status</option>
+                                            @foreach($status as $status)
+                                            <option value="{{ $status->value }}">{{ $status->name }}</option>
+                                            @endforeach
+                                        </select>
                                         <label for="status">Status</label>
-                                        @error('status')<div class="invalid-feedback small">{{$message}}</div>@enderror
+                                        @error('status')<div class="invalid-feedback small">{{ $message }}</div>@enderror
                                     </div>
                                 </div>
                             </div>
                             <div class="d-flex justify-content-end mt-3 gap-2">
                                 <button type="submit" class="btn btn-primary btn-sm px-3">Add Task</button>
-                                <a href="#" class="btn btn-secondary btn-sm px-3">Cancel</a>
+                                <a href="{{ route('tasks.index') }}" class="btn btn-secondary btn-sm px-3">Cancel</a>
                             </div>
                         </form>
                     </div>

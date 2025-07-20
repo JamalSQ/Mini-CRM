@@ -24,12 +24,10 @@ class UpdatedUserRequest extends FormRequest
         return [
             'first_name' => ['required', 'string', 'max:255'],
             'last_name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'email', 'unique:users,email'.$this->user->id],
-            'password' => ['required', 'string', 'min:8'],
+            'email' => ['required', 'email', 'unique:users,email' . $this->user->id],
             'address' => ['required', 'string', 'max:255'],
             'phone_number' => ['required', 'string', 'max:255'],
-            'terms_accepted' => ['required', 'boolean'],
-            'role' => ['required', 'string', 'exists:roles,name'],
+            'terms_accepted' => ['required', 'date'],
         ];
     }
 }

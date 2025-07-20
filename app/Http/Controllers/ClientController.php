@@ -18,7 +18,7 @@ class ClientController extends Controller
     {
         $clients = Client::all();
         // dd($clients);
-        return view('clients.index',['clients'=>$clients]);
+        return view('clients.index', ['clients' => $clients]);
     }
 
     /**
@@ -32,16 +32,15 @@ class ClientController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request,StoreClientRequest $storeClient)
+    public function store(Request $request, StoreClientRequest $storeClient)
     {
         // dd($request);
-        try{
+        try {
 
             Client::create($storeClient->validated());
-            return Reply::success("client created successfully",200,route('clients.index'));
-        }
-        catch(\Exception $e){
-            return Reply::errorWithData("Unable to create records",422,$e->getMessage());
+            return Reply::success("client created successfully", 200, route('clients.index'));
+        } catch (\Exception $e) {
+            return Reply::errorWithData("Unable to create records", 422, $e->getMessage());
         }
     }
 
@@ -50,7 +49,7 @@ class ClientController extends Controller
      */
     public function show(Client $client)
     {
-        return view('clients.show',['client'=>$client]);
+        return view('clients.show', ['client' => $client]);
     }
 
     /**
@@ -58,7 +57,7 @@ class ClientController extends Controller
      */
     public function edit(Client $client)
     {
-         return view('clients.edit',['client'=>$client]);
+        return view('clients.edit', ['client' => $client]);
     }
 
     /**
@@ -68,9 +67,9 @@ class ClientController extends Controller
     {
         try {
             $client->update($updatedvalidatedrequest->validated());
-            return Reply::success("Client updated successfully",200,route('clients.index'));
+            return Reply::success("Client updated successfully", 200, route('clients.index'));
         } catch (\Exception $e) {
-            return Reply::errorWithData("Unable to update record",$e->getMessage(), 422);
+            return Reply::errorWithData("Unable to update record", $e->getMessage(), 422);
         }
     }
 
