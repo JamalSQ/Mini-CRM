@@ -25,8 +25,6 @@
                                     <tr>
                                         <th>#</th>
                                         <th>Title</th>
-                                        <th>Description</th>
-                                        <th>Client</th>
                                         <th>Project</th>
                                         <th>User</th>
                                         <th>Deadline</th>
@@ -35,16 +33,14 @@
                                     </tr>
                                 </thead>
                                 <tbody id="tasks-table-body">
-                                    @forelse($tasks as $index => $task)
+                                    @foreach($tasks as $index => $task)
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $task->title }}</td>
-                                        <td>{{ $task->description }}</td>
-                                        <td>{{ $task->client->contact_name ?? '' }}</td>
                                         <td>{{ $task->project->title ?? '' }}</td>
                                         <td>{{ $task->user->first_name ?? '' }} {{ $task->user->last_name ?? '' }}</td>
-                                        <td>{{ $task->deadline }}</td>
-                                        <td>{{ $task->status }}</td>
+                                        <td>{{ $task->deadline->format('Y-m-d') }}</td>
+                                        <td><span class="badge bg-{{$task->status->color()}}">{{ $task->status->label() }}</span></td>
                                         <td class="text-center">
                                             <div class="d-flex justify-content-center gap-1">
                                                 <a href="{{ route('tasks.show', $task->id) }}" class="btn btn-info btn-xs px-2 py-1" title="View">
@@ -63,13 +59,7 @@
                                             </div>
                                         </td>
                                     </tr>
-                                    @empty
-                                    <tr>
-                                        <td colspan="9" class="text-center py-4">
-                                            <p class="lead text-muted mb-0 small">No tasks found. Start by adding a new one!</p>
-                                        </td>
-                                    </tr>
-                                    @endforelse
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>

@@ -3,6 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
+use App\Enums\ProjectStatus;
 
 class StoreProjectRequest extends FormRequest
 {
@@ -24,10 +26,10 @@ class StoreProjectRequest extends FormRequest
         return [
             'title' => ['required', 'string', 'max:255'],
             'description' => ['required', 'string', 'max:255'],
-            'client_id' => ['required', 'exist:clients,id'],
-            'user_id' => ['required', 'exist:users,id'],
+            'client_id' => ['required', 'exists:clients,id'],
+            'user_id' => ['required', 'exists:users,id'],
             'deadline' => ['required', 'date'],
-            'status' => ['required']
+            'status' => ['required', Rule::in(ProjectStatus::values())]
         ];
     }
 }

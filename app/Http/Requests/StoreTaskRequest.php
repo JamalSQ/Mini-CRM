@@ -3,6 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
+use App\Enums\TaskStatus;
 
 class StoreTaskRequest extends FormRequest
 {
@@ -28,7 +30,7 @@ class StoreTaskRequest extends FormRequest
             'user_id' => ['required', 'exists:users,id'],
             'project_id' => ['required', 'exists:projects,id'],
             'deadline' => ['required', 'date'],
-            'status' => ['required']
+            'status' => ['required', Rule::in(TaskStatus::values())]
         ];
     }
 }

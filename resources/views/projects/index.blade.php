@@ -48,21 +48,19 @@
                                         <th>User</th>
                                         <th>Deadline</th>
                                         <th>Status</th>
-                                        <th>Created At</th>
                                         <th class="text-center">Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach($projects as $project)
+                                    @forelse($projects as $project)
                                     <tr>
                                         <td>{{$loop->index+1}}</td>
                                         <td>{{$project->title}}</td>
-                                        <td>{{$project->client->contact_name}}</td>
+                                        <td>{{$project?->client?->contact_name}}</td>
                                         <td>{{$project->title}}</td>
-                                        <td>{{$project->user->fullName}}</td>
-                                        <td>{{$project->deadline}}</td>
-                                        <td>{{$project->status}}</td>
-                                        <td>{{$project->created_at}}</td>
+                                        <td>{{$project?->user?->fullName}}</td>
+                                        <td>{{$project->deadline->format('Y-m-d')}}</td>
+                                        <td><span class="badge bg-{{$project->status->color()}}">{{$project->status->label()}}</span></td>
                                         <td class="text-center">
                                             <div class="d-flex justify-content-center gap-1">
                                                 <a href="{{route('projects.show',$project->id)}}" class="btn btn-info btn-xs px-2 py-1" title="View">
@@ -81,7 +79,13 @@
                                             </div>
                                         </td>
                                     </tr>
-                                    @endforeach
+                                    @empty
+                                    <tr>
+                                        <td colspan="9" class="text-center py-4">
+                                            <p class="lead text-muted mb-0 small">No projects found. Start by adding a new one!</p>
+                                        </td>
+                                    </tr>
+                                    @endforelse
                                 </tbody>
                             </table>
                         </div>

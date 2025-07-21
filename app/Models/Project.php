@@ -15,7 +15,7 @@ class Project extends Model
 
     protected $fillable = ['title', 'description', 'deadline', 'status', 'client_id', 'user_id'];
 
-    protected function caste(): array
+    public function casts(): array
     {
         return [
             'status' => ProjectStatus::class,

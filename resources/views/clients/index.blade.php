@@ -27,7 +27,7 @@
                                     <tr>
                                         <th scope="col" style="width: 5%;">#</th>
                                         <th scope="col" style="width: 20%;">Company</th>
-                                        <th scope="col" style="width: 20%;">Contact</th>
+                                        <th scope="col" style="width: 20%;">Contact Name</th>
                                         <th scope="col" style="width: 25%;">Email</th>
                                         <th scope="col" style="width: 15%;">Phone</th>
                                         <th scope="col" class="text-center" style="width: 15%;">Actions</th>
@@ -64,9 +64,6 @@
                                     <tr>
                                         <td colspan="6" class="text-center py-4">
                                             <p class="lead text-muted mb-0 small">No clients found. Start by adding a new one!</p>
-                                            <a href="{{ route('clients.create') }}" class="btn btn-success btn-sm mt-2">
-                                                <i class="fas fa-plus me-1"></i> Add Your First Client
-                                            </a>
                                         </td>
                                     </tr>
                                     @endforelse

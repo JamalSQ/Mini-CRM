@@ -58,13 +58,6 @@
                     @error('email')<div class="invalid-feedback small">{{ $message }}</div>@enderror
                   </div>
                 </div>
-                <div class="col-md-6">
-                  <div class="form-floating">
-                    <input type="password" class="form-control form-control-sm @error('password') is-invalid @enderror" id="password" name="password" placeholder="Password">
-                    <label for="password">Password (leave blank to keep current)</label>
-                    @error('password')<div class="invalid-feedback small">{{ $message }}</div>@enderror
-                  </div>
-                </div>
               </div>
               <div class="row mb-2">
                 <div class="col-md-6 mb-2 mb-md-0">
@@ -79,15 +72,6 @@
                     <input type="tel" class="form-control form-control-sm @error('phone_number') is-invalid @enderror" id="phone_number" name="phone_number" value="{{ old('phone_number', $user->phone_number) }}" placeholder="Phone Number">
                     <label for="phone_number">Phone Number</label>
                     @error('phone_number')<div class="invalid-feedback small">{{ $message }}</div>@enderror
-                  </div>
-                </div>
-              </div>
-              <div class="row mb-2">
-                <div class="col-md-6 mb-2 mb-md-0">
-                  <div class="form-floating">
-                    <input type="datetime-local" class="form-control form-control-sm @error('terms_accepted_at') is-invalid @enderror" id="terms_accepted_at" name="terms_accepted_at" value="{{ old('terms_accepted_at', $user->terms_accepted_at ? $user->terms_accepted_at->format('Y-m-d\TH:i') : '' ) }}" placeholder="Terms Accepted At">
-                    <label for="terms_accepted_at">Terms Accepted At</label>
-                    @error('terms_accepted_at')<div class="invalid-feedback small">{{ $message }}</div>@enderror
                   </div>
                 </div>
               </div>

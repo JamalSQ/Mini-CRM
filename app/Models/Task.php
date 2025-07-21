@@ -16,19 +16,12 @@ class Task extends Model
 
     protected $fillable = ['title', 'description', 'deadline', 'client_id', 'project_id', 'user_id', 'status'];
 
-    protected function caste(): array
+    public function casts(): array
     {
         return [
             'status' => TaskStatus::class,
             'deadline' => 'datetime',
         ];
-    }
-
-    public function title(): Attribute
-    {
-        return new Attribute(
-            get: fn($value) => ucfirst($value),
-        );
     }
 
     protected function project(): BelongsTo

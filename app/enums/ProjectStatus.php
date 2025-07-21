@@ -27,4 +27,16 @@ enum ProjectStatus: string
     {
         return array_column(self::cases(), 'value');
     }
+
+    public function color(): string
+    {
+        return match ($this) {
+            self::OPEN => 'primary',
+            self::CLOSED => 'success',
+            self::IN_PROGRESS => 'warning',
+            self::BLOCKED => 'danger',
+            self::CANCELLED => 'danger',
+            self::COMPLETED => 'success',
+        };
+    }
 }

@@ -3,6 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
+use App\Enums\ProjectStatus;
 
 class UpdatedProjectRequest extends FormRequest
 {
@@ -22,12 +24,12 @@ class UpdatedProjectRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title'=>['required','string','max:255'],
-            'description'=>['required','string','max:255'],
-            'client_id'=>['required','exists:clients,id'],
-            'user_id'=>['required','exists:users,id'],
-            'deadline'=>['required','date'],
-            'status'=>['required']
+            'title' => ['required', 'string', 'max:255'],
+            'description' => ['required', 'string', 'max:255'],
+            'client_id' => ['required', 'exists:clients,id'],
+            'user_id' => ['required', 'exists:users,id'],
+            'deadline' => ['required', 'date'],
+            'status' => ['required', Rule::in(ProjectStatus::values())]
         ];
     }
 }

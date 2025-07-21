@@ -81,15 +81,6 @@
                   </div>
                 </div>
               </div>
-              <div class="row mb-2">
-                <div class="col-md-6 mb-2 mb-md-0">
-                  <div class="form-floating">
-                    <input type="datetime-local" class="form-control form-control-sm @error('terms_accepted_at') is-invalid @enderror" id="terms_accepted_at" name="terms_accepted_at" value="{{ old('terms_accepted_at') }}" placeholder="Terms Accepted At">
-                    <label for="terms_accepted_at">Terms Accepted At</label>
-                    @error('terms_accepted_at')<div class="invalid-feedback small">{{ $message }}</div>@enderror
-                  </div>
-                </div>
-              </div>
               <div class="d-flex justify-content-end mt-3 gap-2">
                 <button type="submit" class="btn btn-primary btn-sm px-3">Add User</button>
                 <a href="{{ route('users.index') }}" class="btn btn-secondary btn-sm px-3">Cancel</a>

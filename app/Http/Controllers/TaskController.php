@@ -41,16 +41,6 @@ class TaskController extends Controller
      */
     public function store(Request $request, StoreTaskRequest $storeTaskRequest)
     {
-        // $data = [
-        //     'title' => $request->title,
-        //     'description' => $request->description,
-        //     'project_id' => $request->project_id,
-        //     'user_id' => $request->user_id,
-        //     'client_id' => $request->client_id,
-        //     'status' => $request->status,
-        //     'deadline' => $request->deadline,
-        // ];
-
         try {
             Task::create($storeTaskRequest->validated());
             return Reply::success("Task created successfully", 200, route('tasks.index'));
@@ -72,7 +62,18 @@ class TaskController extends Controller
      */
     public function edit(Task $task)
     {
-        return view('tasks.edit', ['task' => $task]);
+        $clients = Client::all();
+        $users = User::all();
+        $projects = Project::all();
+        $statuses = TaskStatus::cases();
+
+        return view('tasks.edit', [
+            'task' => $task,
+            'clients' => $clients,
+            'users' => $users,
+            'projects' => $projects,
+            'statuses' => $statuses,
+        ]);
     }
 
     /**
@@ -80,19 +81,11 @@ class TaskController extends Controller
      */
     public function update(Request $request, Task $task, UpdatedTaskRequest $updatedTaskRequest)
     {
-        $data = [
-            'title' => $request->title,
-            'description' => $request->description,
-            'project_id' => $request->projectId,
-            'user_id' => $request->userId,
-            'status' => $request->status,
-        ];
-
         try {
-            $task->update($data);
+            $task->update($updatedTaskRequest->validated());
             return Reply::success("Task updated successfully", 200, route('tasks.index'));
         } catch (\Exception $e) {
-            return Reply::error("Task updated successfully", 200, $e->getMessage(), route('tasks.index'));
+            return Reply::error("Unable to update the task", 422, $e->getMessage(), route('tasks.index'));
         }
     }
 

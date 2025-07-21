@@ -79,6 +79,11 @@ class ClientController extends Controller
      */
     public function destroy(Client $client)
     {
-        return "client deleted successfully";
+        try {
+            $client->delete();
+            return Reply::success("Client deleted successfully", 200, route('clients.index'));
+        } catch (\Exception $e) {
+            return Reply::error("Unable to delete record", 422, route('clients.index'), $e->getMessage());
+        }
     }
 }

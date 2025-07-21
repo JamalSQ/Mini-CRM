@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Enums\ProjectStatus;
 use App\Http\Requests\StoreProjectRequest;
+use App\Http\Requests\UpdatedProjectRequest;
 use App\Models\Project;
 use Illuminate\Http\Request;
 use App\Utils\Reply;
@@ -36,19 +37,11 @@ class ProjectController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreProjectRequest $request)
     {
-        $data = [
-            'title' => $request->title,
-            'description' => $request->description,
-            'client_id' => $request->clientId,
-            'user_id' => $request->userId,
-            'deadline' => $request->deadline,
-            'status' => $request->status,
-        ];
 
         try {
-            Project::create($data);
+            Project::create($request->validated());
             return Reply::success("Project created successfully", 200, route('projects.index'));
         } catch (\Exception $e) {
             return Reply::success("Project created successfully", 200, $e->getMessage());
@@ -60,6 +53,7 @@ class ProjectController extends Controller
      */
     public function show(Project $project)
     {
+
         return view('projects.show', ['project' => $project]);
     }
 
@@ -69,28 +63,21 @@ class ProjectController extends Controller
     public function edit(Project $project)
     {
         $clients = Client::all();
-        $Users =  User::all();
+        $users =  User::all();
+        $projects = Project::all();
         $status = ProjectStatus::cases();
 
-        return view('projects.edit', ['project' => $project, 'clients' => $clients, 'users' => $Users, 'statuses' => $status]);
+        return view('projects.edit', ['project' => $project, 'clients' => $clients, 'users' => $users, 'projects' => $projects, 'statuses' => $status]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Project $project, ProjectUpdateRequest $projectUpdateRequest)
+    public function update(Request $requests, Project $project, UpdatedProjectRequest $request)
     {
-        $data = [
-            'title' => $request->title,
-            'description' => $request->description,
-            'client_id' => $request->clientId,
-            'user_id' => $request->userId,
-            'deadline' => $request->deadline,
-            'status' => $request->status,
-        ];
-
+        // dd($requests->all());
         try {
-            $project->update($data);
+            $project->update($request->validated());
             return Reply::success("Project updated successfully", 200, route('projects.index'));
         } catch (\Exception $e) {
             return Reply::success("Project updated successfully", 200, $e->getMessage());

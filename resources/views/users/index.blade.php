@@ -29,20 +29,18 @@
                     <th>Email</th>
                     <th>Phone</th>
                     <th>Address</th>
-                    <th>Terms Accepted</th>
                     <th class="text-center">Actions</th>
                   </tr>
                 </thead>
                 <tbody id="users-table-body">
                   @forelse($users as $index => $user)
                   <tr>
-                    <td>{{ $loop->iteration }}</td>
+                    <td>{{ $loop->index + 1 }}</td>
                     <td>{{ $user->first_name }}</td>
                     <td>{{ $user->last_name }}</td>
                     <td>{{ $user->email }}</td>
                     <td>{{ $user->phone_number }}</td>
                     <td>{{ $user->address }}</td>
-                    <td>{{ $user->terms_accepted_at }}</td>
                     <td class="text-center">
                       <div class="d-flex justify-content-center gap-1">
                         <a href="{{ route('users.show', $user->id) }}" class="btn btn-info btn-xs px-2 py-1" title="View">

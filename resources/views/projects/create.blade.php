@@ -53,18 +53,17 @@
                             </div>
                             <div class="row mb-2">
                                 <div class="col-md-4 mb-2 mb-md-0">
-                                    <div class="slectboxdesign">
-                                        <select name="clientId" id="clientId" name="clientId" style="border:1px solid gray;" class="p-5 form-control form-control-sm form-select @error('clientId') is-invalid @enderror" required>
+                                    <div class="form-floating">
+                                        <select id="clientId" name="client_id" class="form-select @error('clientId') is-invalid @enderror" required>
                                             <option value="" selected disabled>Select Client</option>
                                             @foreach($clients as $client)
                                             <option
-                                                value="{{ $client->id }}"
-                                                data-contact-name="{{ $client->contact_name }}"
-                                                data-company-name="{{ $client->company_name }}">
+                                                value="{{ $client->id }}">
                                                 {{ $client->contact_name }} ({{ $client->company_name }})
                                             </option>
                                             @endforeach
                                         </select>
+                                        <label for="clientId">Client</label>
                                         @error('clientId')
                                         <div class="invalid-feedback small">{{ $message }}</div>
                                         @else
@@ -74,7 +73,7 @@
                                 </div>
                                 <div class="col-md-4 mb-2 mb-md-0">
                                     <div class="form-floating">
-                                        <select name="userId" id="userId" name="userId" class="form-select @error('userId') is-invalid @enderror" required>
+                                        <select id="userId" name="user_id" class="form-select @error('userId') is-invalid @enderror" required>
                                             <option value="" selected disabled>Select User</option>
                                             @foreach($users as $user)
                                             <option value="{{ $user->id }}">
@@ -104,8 +103,8 @@
                                         <select name="status" id="userId" class="form-select @error('status') is-invalid @enderror" required>
                                             <option value="" selected disabled>Select Status</option>
                                             @foreach($statuses as $status)
-                                            <option value="{{ $status->name }}">
-                                                {{ $status->value }}
+                                            <option value="{{ $status->value }}">
+                                                {{ $status->label() }}
                                             </option>
                                             @endforeach
                                         </select>

@@ -100,7 +100,7 @@
                                         <select name="status" id="status" class="form-select @error('status') is-invalid @enderror" required>
                                             <option value="" selected disabled>Select Status</option>
                                             @foreach($status as $status)
-                                            <option value="{{ $status->value }}">{{ $status->name }}</option>
+                                            <option value="{{ $status->value }}">{{ $status->label() }}</option>
                                             @endforeach
                                         </select>
                                         <label for="status">Status</label>

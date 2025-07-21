@@ -91,14 +91,20 @@
                             <div class="row mb-2">
                                 <div class="col-md-6 mb-2 mb-md-0">
                                     <div class="form-floating">
-                                        <input type="date" class="form-control form-control-sm @error('deadline') is-invalid @enderror" id="deadline" name="deadline" value="{{ old('deadline', $task->deadline) }}" placeholder="Deadline" required>
+                                        <input type="date" class="form-control form-control-sm @error('deadline') is-invalid @enderror" id="deadline" name="deadline" value="{{ $task->deadline->format('Y-m-d') }}" placeholder="Deadline" required>
                                         <label for="deadline">Deadline</label>
                                         @error('deadline')<div class="invalid-feedback small">{{ $message }}</div>@enderror
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-floating">
-                                        <input type="text" class="form-control form-control-sm @error('status') is-invalid @enderror" id="status" name="status" value="{{ old('status', $task->status) }}" placeholder="Status" required>
+                                        <select name="status" id="status" class="form-control form-control-sm @error('status') is-invalid @enderror">
+                                            @foreach($statuses as $status)
+                                            <option value="{{$status->value}}" {{ $task->status?->value == $status->value ? 'selected' : '' }}>
+                                                {{ $status->label() }}
+                                            </option>
+                                            @endforeach
+                                        </select>
                                         <label for="status">Status</label>
                                         @error('status')<div class="invalid-feedback small">{{ $message }}</div>@enderror
                                     </div>
