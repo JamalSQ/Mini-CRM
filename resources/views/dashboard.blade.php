@@ -1,5 +1,9 @@
 <x-layouts.app>
-  <h1 class="mb-4">Dashboard Page</h1>
+  <nav aria-label="breadcrumb" class="p-3">
+    <ol class="breadcrumb small bg-white px-2 py-2 rounded-2 shadow-sm">
+      <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
+    </ol>
+  </nav>
   <div class="container">
     <div class="row g-3">
       <!-- Card 1: Users -->
@@ -9,7 +13,7 @@
             <i class="fas fa-users fa-2x me-3"></i>
             <div>
               <h5 class="card-title">Users</h5>
-              <h3 class="card-text">1,234</h3>
+              <h3 class="card-text">{{$users}}</h3>
             </div>
           </div>
         </div>
@@ -21,7 +25,7 @@
             <i class="fas fa-handshake fa-2x me-3"></i>
             <div>
               <h5 class="card-title">Clients</h5>
-              <h3 class="card-text">567</h3>
+              <h3 class="card-text">{{$clients}}</h3>
             </div>
           </div>
         </div>
@@ -33,7 +37,7 @@
             <i class="fas fa-folder-open fa-2x me-3"></i>
             <div>
               <h5 class="card-title">Projects</h5>
-              <h3 class="card-text">89</h3>
+              <h3 class="card-text">{{$projects}}</h3>
             </div>
           </div>
         </div>
@@ -45,7 +49,7 @@
             <i class="fas fa-user-tie fa-2x me-3"></i>
             <div>
               <h5 class="card-title">Clients</h5>
-              <h3 class="card-text">230</h3>
+              <h3 class="card-text">{{$clients}}</h3>
             </div>
           </div>
         </div>

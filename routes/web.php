@@ -5,6 +5,7 @@ use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -12,7 +13,7 @@ Route::get('/', function () {
     return view('welcome');
 })->name('home');
 
-Route::group(['middleware'=>'checkAuth'],function(){
+Route::group(['middleware' => 'checkAuth'], function () {
     // Login Routes
     Route::get('/login', [AuthController::class, "loginForm"])->name("login.form");
     Route::post('/login', [AuthController::class, "login"])->name("login");
@@ -23,17 +24,13 @@ Route::group(['middleware'=>'checkAuth'],function(){
 });
 
 
-Route::group(['middleware'=>'auth'],function(){
+Route::group(['middleware' => 'auth'], function () {
 
     Route::get('/logout',  [AuthController::class, "logout"])->name("logout");
 
-    Route::get('dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
-
-    Route::resource('projects',ProjectController::class);
-    Route::resource('tasks',TaskController::class);
-    Route::resource('users',UserController::class);
-    Route::resource('clients',ClientController::class);
-
+    Route::get('dashboard', [DashboardController::class, "index"])->name('dashboard');
+    Route::resource('projects', ProjectController::class);
+    Route::resource('tasks', TaskController::class);
+    Route::resource('users', UserController::class);
+    Route::resource('clients', ClientController::class);
 });
