@@ -74,6 +74,23 @@
                     @error('phone_number')<div class="invalid-feedback small">{{ $message }}</div>@enderror
                   </div>
                 </div>
+                  <div class="col-md-6 mt-2">
+                  <div class="form-floating">
+                    <select name="role" id="role" class="form-select @error('role') is-invalid @enderror">
+                      <option value="user" {{($user->role == 'user')?'selected':''}}>User</option>
+                      <option value="admin" {{($user->role == 'admin')?'selected':''}}>Admin</option>
+                    </select>
+                    <label for="phone_number">Role</label>
+                    @error('role')<div class="invalid-feedback small">{{ $message }}</div>@enderror
+                  </div>
+                </div>
+                <div class="col-md-3 mt-4">
+                    <label for="is_active" class="mx-3">Is Active</label>
+                    {{-- Hidden input to ensure a value is always sent for 'is_active' --}}
+                    <!-- <input type="hidden" name="is_active" value="0">  -->
+                    <input type="checkbox" name="is_active" id="is_active" value="{{ old('is_active', $user->is_active) }}" class="@error('is_active') is-invalid @enderror" {{$user->is_active?'checked':''}}>
+                    @error('is_active')<div class="invalid-feedback small">{{ $message }}</div>@enderror
+                </div>
               </div>
               <div class="d-flex justify-content-end mt-3 gap-2">
                 <button type="submit" class="btn btn-primary btn-sm px-3">Save Changes</button>

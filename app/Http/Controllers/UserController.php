@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Utils\Reply;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Gate;
 
 class UserController extends Controller
 {
@@ -33,7 +34,7 @@ class UserController extends Controller
      */
     public function store(StoreUserRequest $request)
     {
-        // dd($request);
+
         try {
             User::create($request->validated());
             return Reply::success('User record created successfylly', 200, route('users.index'));
@@ -63,17 +64,17 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user, UpdatedUserRequest $updated_user_request)
     {
-        $data = [
-            'first_name' => $request->first_name,
-            'last_name' => $request->last_name,
-            'email' => $request->email,
-            'address' => $request->address,
-            'phone_number' => $request->phone_number,
-            'password' => $user->password,
-        ];
+        // $data = [
+        //     'first_name' => $request->first_name,
+        //     'last_name' => $request->last_name,
+        //     'email' => $request->email,
+        //     'address' => $request->address,
+        //     'phone_number' => $request->phone_number,
+        //     'password' => $user->password,
+        // ];
 
         try {
-            $user->update($data);
+            $user->update($updated_user_request->validated());
             return Reply::success('User updated successfylly', 200, route('users.index'));
         } catch (\Exception $e) {
             return Reply::error('Unable to update user', 422, route('users.index'), $e);
@@ -85,6 +86,10 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
+        if(!Gate::allows('delete-user',$user)){
+           return Reply::error("You are not authorized to delete this user",403, route('users.index'));
+        }
+
         try {
             $user->delete();
             return Reply::success("User deleted successfully", 200, route('users.index'));

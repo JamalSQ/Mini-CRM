@@ -33,7 +33,7 @@ function showMessageModal(
             iconEl.innerHTML =
                 '<svg xmlns="http://www.w3.org/2000/svg" class="text-white" width="20" height="20" fill="currentColor" viewBox="0 0 16 16"><path d="M16 2a2 2 0 0 1-2 2h-9a.5.5 0 0 0 0 1h9a3 3 0 0 0 0-6H3a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h11a3 3 0 0 0 1-5.75V2z"/></svg>';
             break;
-        case "error":
+        case "danger":
             modal.classList.add("bg-danger");
             iconEl.innerHTML =
                 '<svg xmlns="http://www.w3.org/2000/svg" class="text-white" width="20" height="20" fill="currentColor" viewBox="0 0 16 16"><path d="M8 1a7 7 0 1 0 0 14A7 7 0 0 0 8 1zm3.146 9.146a.5.5 0 1 1-.708.708L8 8.707 5.854 10.854a.5.5 0 1 1-.708-.708L7.293 8 5.146 5.854a.5.5 0 1 1 .708-.708L8 7.293l2.146-2.147a.5.5 0 0 1 .708.708L8.707 8l2.147 2.146z"/></svg>';
@@ -52,26 +52,25 @@ function showMessageModal(
     modal.style.display = "block";
     modal.classList.add("show");
 
-    if (timeout > 0) {
-        setTimeout(() => {
-            hideMessageModal(redirectRoute);
-        }, timeout);
-    }
+
+    hideMessageModal(redirectRoute,type);
 }
 
-function hideMessageModal(redirectRoute) {
+function hideMessageModal(redirectRoute,type) {
     const modal = document.getElementById("messageModal");
 
-    console.log("redirect route: ", redirectRoute);
+    console.log("redirect route: ", redirectRoute,type);
 
     // Wait for fade-out animation (300ms), then hide completely
     setTimeout(() => {
         modal.classList.remove("show");
         modal.classList.add("hide");
         modal.style.display = "none";
-        modal.classList.remove("hide");
-        window.location = redirectRoute;
-    }, 300);
+        if(redirectRoute != ""){
+            window.location = redirectRoute;
+        }
+        console.log("Redirecting to: ", redirectRoute);
+    }, 2000);
 }
 
 (function () {

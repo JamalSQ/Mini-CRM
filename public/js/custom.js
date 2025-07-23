@@ -29,7 +29,7 @@ function ajaxFormSubmit(form) {
         contentType: false,
         success: function (response) {
             console.log(response);
-            var redirectRoute = response.redirect || "/";
+            var redirectRoute = response.redirect || "";
             showMessageModal(response.message, response.color, redirectRoute);
         },
         error: function (xhr) {
@@ -42,7 +42,6 @@ function ajaxFormSubmit(form) {
                 showMessageModal(
                     "An unexpected error occurred.",
                     "danger",
-                    "/"
                 );
             }
         },

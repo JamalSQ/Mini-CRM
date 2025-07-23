@@ -4,7 +4,7 @@ namespace App\Utils;
 
 class Reply{
 
-    public static function success($message,$status,$redirectUrl="/"){
+    public static function success($message,$status,$redirectUrl=""){
         return ([
             "message" => $message,
             "status"  => $status,
@@ -13,13 +13,13 @@ class Reply{
         ]);
     }
 
-    public static function error($message,$status=422,$redirectUrl="/",$errors,){
+    public static function error($message,$status=422,$redirectUrl="",$errors=['unexpected error from reply file'],){
         return ([
             "message"  => $message,
             "status"   => $status,
             "redirect" => $redirectUrl,
             "errors"   => $errors,
-            "color"    => "error",
+            "color"    => "danger",
         ]);
     }
 

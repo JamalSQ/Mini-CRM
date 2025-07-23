@@ -28,6 +28,8 @@ class StoreUserRequest extends FormRequest
             'password' => ['string', 'min:8'],
             'address' => ['string', 'max:255'],
             'phone_number' => ['string', 'max:255'],
+            'is_active' => ['boolean', 'nullable'],
+            'role' => ['string', 'in:user,admin,manager'], // Default role is 'user'
         ];
     }
 }

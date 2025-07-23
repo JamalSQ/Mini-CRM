@@ -11,6 +11,7 @@
     <div class="d-flex align-items-center ms-auto gap-2">
       @auth
       <span class="fw-semibold text-secondary me-2">
+        <span class="badge bg-success">{{ Auth()->user()->role }}</span>
         Welcome, <span class="text-primary">{{ Auth()->user()->fullName }}</span>
       </span>
       <a href="{{ route('logout') }}" class="btn btn-outline-danger btn-sm">Logout</a>

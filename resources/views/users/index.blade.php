@@ -27,8 +27,9 @@
                     <th>First Name</th>
                     <th>Last Name</th>
                     <th>Email</th>
-                    <th>Phone</th>
-                    <th>Address</th>
+                    <th>Phone Number</th>
+                    <th>Active</th>
+                    <th>Role</th>
                     <th class="text-center">Actions</th>
                   </tr>
                 </thead>
@@ -40,7 +41,8 @@
                     <td>{{ $user->last_name }}</td>
                     <td>{{ $user->email }}</td>
                     <td>{{ $user->phone_number }}</td>
-                    <td>{{ $user->address }}</td>
+                   <td>{!! ($user->is_active)?'<span class="badge bg-success">active</span>':'<span class="badge bg-danger">not active</span>'; !!}</td>
+                   <td>{!! ($user->role == 'user')?'<span class="badge bg-info">User</span>':'<span class="badge bg-success">Admin</span>'; !!}</td>
                     <td class="text-center">
                       <div class="d-flex justify-content-center gap-1">
                         <a href="{{ route('users.show', $user->id) }}" class="btn btn-info btn-xs px-2 py-1" title="View">
