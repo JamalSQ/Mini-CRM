@@ -87,14 +87,14 @@ class UserController extends Controller
     public function destroy(User $user)
     {
         if(!Gate::allows('delete-user',$user)){
-           return Reply::error("You are not authorized to delete this user",403, route('users.index'));
+           return Reply::error("You are not authorized to delete this user",403);
         }
-
+        
         try {
             $user->delete();
             return Reply::success("User deleted successfully", 200, route('users.index'));
         } catch (\Exception $e) {
-            return Reply::error("unable to delete the user", 422, route('users.index'), $e,);
+            return Reply::error("unable to delete the user", 422," ", $e,);
         }
     }
 }

@@ -11,6 +11,7 @@ use App\Models\Project;
 use App\Models\User;
 use App\Enums\TaskStatus;
 use App\Models\Client;
+use Illuminate\Support\Facades\Auth;
 
 class TaskController extends Controller
 {
@@ -19,7 +20,8 @@ class TaskController extends Controller
      */
     public function index()
     {
-        $tasks = Task::all();
+
+        $tasks = Task::with('project')->where('user_id',Auth::id())->get();
         return view('tasks.index', ['tasks' => $tasks]);
     }
 

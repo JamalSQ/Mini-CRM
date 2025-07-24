@@ -34,7 +34,7 @@
                                     </tr>
                                 </thead>
                                 <tbody id="clients-table-body">
-                                    @forelse($clients as $index => $client)
+                                    @foreach($clients as $index => $client)
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $client->company_name }}</td>
@@ -60,13 +60,7 @@
                                             </div>
                                         </td>
                                     </tr>
-                                    @empty
-                                    <tr>
-                                        <td colspan="6" class="text-center py-4">
-                                            <p class="lead text-muted mb-0 small">No clients found. Start by adding a new one!</p>
-                                        </td>
-                                    </tr>
-                                    @endforelse
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>

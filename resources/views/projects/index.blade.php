@@ -52,7 +52,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @forelse($projects as $project)
+                                    @foreach($projects as $project)
                                     <tr>
                                         <td>{{$loop->index+1}}</td>
                                         <td>{{$project->title}}</td>
@@ -79,13 +79,7 @@
                                             </div>
                                         </td>
                                     </tr>
-                                    @empty
-                                    <tr>
-                                        <td colspan="9" class="text-center py-4">
-                                            <p class="lead text-muted mb-0 small">No projects found. Start by adding a new one!</p>
-                                        </td>
-                                    </tr>
-                                    @endforelse
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>

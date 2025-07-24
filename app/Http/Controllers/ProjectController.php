@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use App\Utils\Reply;
 use App\Models\Client;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class ProjectController extends Controller
 {
@@ -17,8 +18,9 @@ class ProjectController extends Controller
      * Display a listing of the resource.
      */
     public function index()
-    {
-        $projects = Project::with(['user', 'client'])->get();
+    {   
+        $userId = Auth::id();
+        $projects = Project::with(['user', 'client'])->where('user_id', $userId)->get();
         return view('projects.index', ['projects' => $projects]);
     }
 
