@@ -33,8 +33,19 @@
             <i class="fas fa-tasks me-2"></i> Tasks
           </a>
         </li>
+        <li>
+          <a href="{{ route('roles.index') }}"
+            class="nav-link {{ request()->routeIs('roles.*') ? 'active' : 'link-dark' }}">
+            <i class="bi bi-person-badge-fill me-2"></i> Roles
+          </a>
+        </li>
+        <!-- <li>
+          <a href="{{ route('permissions.index') }}"
+            class="nav-link {{ request()->routeIs('permissions.*') ? 'active' : 'link-dark' }}">
+            <i class="fas fa-tasks me-2"></i> Permissions
+          </a>
+        </li> -->
       </ul>
-
       <hr>
       <div class="dropdown">
         <a href="#" class="d-flex align-items-center link-dark text-decoration-none dropdown-toggle" id="dropdownUser2" data-bs-toggle="dropdown" aria-expanded="false">

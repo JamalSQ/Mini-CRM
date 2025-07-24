@@ -9,6 +9,7 @@ use App\Utils\Reply;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Gate;
+use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
@@ -17,7 +18,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::all();
+        $users = User::with('roles')->get();
         return view('users.index', ['users' => $users]);
     }
 
@@ -26,7 +27,8 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('users.create');
+        $roles = Role::all();
+        return view('users.create',['roles'=>$roles]);
     }
 
     /**
@@ -34,9 +36,9 @@ class UserController extends Controller
      */
     public function store(StoreUserRequest $request)
     {
-
         try {
-            User::create($request->validated());
+             $user = User::create($request->validated());
+             $user->assignRole($request->role);
             return Reply::success('User record created successfylly', 200, route('users.index'));
         } catch (\Exception $e) {
             return Reply::error('Unable to create user', 422, route('users.index'), $e);
@@ -48,6 +50,7 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
+        $user->load('roles');
         return view('users.show', ['user' => $user]);
     }
 
@@ -56,25 +59,25 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        return view('users.edit', ['user' => $user]);
+        $user->load('roles');
+        $roles = Role::all();
+        $userRoleIds = $user->roles->pluck('id')->toArray();
+
+        return view('users.edit', [
+            'user' => $user,
+            'roles' => $roles,
+            'userRoleIds' => $userRoleIds, // Pass this to the view
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, User $user, UpdatedUserRequest $updated_user_request)
+    public function update(Request $request, User $user,UpdatedUserRequest $updated_user_request)
     {
-        // $data = [
-        //     'first_name' => $request->first_name,
-        //     'last_name' => $request->last_name,
-        //     'email' => $request->email,
-        //     'address' => $request->address,
-        //     'phone_number' => $request->phone_number,
-        //     'password' => $user->password,
-        // ];
-
         try {
             $user->update($updated_user_request->validated());
+            $user->syncRoles([$request->role]);
             return Reply::success('User updated successfylly', 200, route('users.index'));
         } catch (\Exception $e) {
             return Reply::error('Unable to update user', 422, route('users.index'), $e);
@@ -86,11 +89,11 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        if(!Gate::allows('delete-user',$user)){
-           return Reply::error("You are not authorized to delete this user",403);
-        }
-        
         try {
+            //  Before deleting the user, you might want to remove their roles/permissions
+            // though the package's foreign keys usually handle this on cascade delete.
+            $user->syncRoles([]); // Remove all roles
+            $user->syncPermissions([]); // Remove all direct permissions
             $user->delete();
             return Reply::success("User deleted successfully", 200, route('users.index'));
         } catch (\Exception $e) {

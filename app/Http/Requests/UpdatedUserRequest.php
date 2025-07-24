@@ -28,7 +28,7 @@ class UpdatedUserRequest extends FormRequest
             "address" => ["string", "max:255"],
             "phone_number" => ["string", "max:255"],
             "is_active" => ["boolean", "nullable"],
-            "role" => ["string", "in:user,admin,manager"], // Default role is 'user'
+            'role' => ['required', 'string', 'exists:roles,name'],
         ];
     }
 }

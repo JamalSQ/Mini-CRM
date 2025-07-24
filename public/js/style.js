@@ -95,3 +95,4 @@ function hideMessageModal(redirectRoute,type) {
         );
     });
 })();
+

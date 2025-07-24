@@ -27,7 +27,14 @@
               <i class="fa-solid fa-user fa-2x text-white"></i>
             </div>
             <h3 class="h5 fw-bold text-primary mb-1 text-center">{{ $user->fullName }}</h3>
-            <div class="text-muted small text-center mb-2">User</div>
+            <div class="text-muted small text-center mb-2">
+              @forelse($user->getRoleNames() as $roleName)
+              {{-- You can display them as badges, comma-separated, etc. --}}
+              <span class="badge bg-secondary me-1">{{ $roleName }}</span>
+              @empty
+              <span class="badge bg-warning text-dark">No R ole Assigned</span>
+              @endforelse
+            </div>
             <div class="d-flex flex-column gap-2 w-100 align-items-center">
               <a href="mailto:{{ $user->email }}" class="text-decoration-none small"><i class="fa-solid fa-envelope me-1"></i> {{ $user->email }}</a>
               <a href="tel:{{ $user->phone_number }}" class="text-decoration-none small"><i class="fa-solid fa-phone me-1"></i> {{ $user->phone_number }}</a>

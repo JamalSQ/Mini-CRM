@@ -17,8 +17,15 @@
     <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" rel="stylesheet">
 
+    <!-- Bootstrap icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+    />
+
     <!-- Your custom CSS -->
     <link href="{{asset('css/style.css')}}" rel="stylesheet" />
+
 
     <title>starting file</title>
 </head>
@@ -58,7 +65,7 @@
 
     <script>
         $(document).ready(function() {
-            const TableIds = ['clients-table', 'Project-table', 'tasks-table', 'users-table'];
+            const TableIds = ['clients-table', 'Project-table', 'tasks-table', 'users-table','roles-tables'];
             const commonDataTableOptions = {
                 "responsive": true,
                 "pageLength": 10,

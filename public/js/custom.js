@@ -28,12 +28,12 @@ function ajaxFormSubmit(form) {
         processData: false,
         contentType: false,
         success: function (response) {
-            console.log(response);
+            console.log("response is ",response);
             var redirectRoute = response.redirect || "";
             showMessageModal(response.message, response.color, redirectRoute);
         },
         error: function (xhr) {
-            console.log(xhr);
+            console.log("xhr is ",xhr);
             if (xhr.status === 422) {
                 const errors =
                     xhr.responseJSON?.errors || xhr.responseJSON?.error || {};

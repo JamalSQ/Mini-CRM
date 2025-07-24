@@ -76,3 +76,178 @@ body > div > div.col-md-3.p-0 > div > ul > li > a:hover {
     padding: 14px;
     border-radius: 4px;
 }
+
+.container {
+    max-width: 1200px; /* Limit container width for better readability */
+}
+.card {
+    border: none;
+    border-radius: 0.75rem;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.05);
+}
+.btn-lg {
+    font-size: 1.1rem; /* Slightly larger buttons */
+    padding: 0.75rem 1.5rem;
+}
+.form-control-lg {
+    font-size: 1.1rem;
+}
+.form-check-label {
+    cursor: pointer; /* Indicate interactivity */
+}
+.badge {
+    font-weight: 500;
+}
+/* Custom styles for switch background if needed */
+.form-check-inline.form-switch {
+    background-color: #f0f4f8; /* Light background for permission switches */
+    transition: all 0.2s ease-in-out;
+}
+.form-check-inline.form-switch:hover {
+    background-color: #e2e8f0;
+}
+.form-check-inline.form-switch input:checked + label {
+    color: var(--bs-primary); /* Highlight label for checked switches */
+    font-weight: 600;
+}
+.text-primary {
+    color: #0d6efd !important; /* Bootstrap primary blue */
+}
+.text-secondary {
+    color: #6c757d !important; /* Bootstrap secondary grey */
+}
+.bg-info-subtle {
+    background-color: #cfe2ff !important; /* Example Bootstrap 5 light info color */
+}
+.text-info {
+    color: #0dcaf0 !important; /* Example Bootstrap 5 info color */
+}
+.bg-success-subtle {
+    background-color: #d1e7dd !important; /* Example Bootstrap 5 light success color */
+}
+.text-success {
+    color: #198754 !important; /* Example Bootstrap 5 success color */
+}
+
+/* Responsive adjustments */
+@media (max-width: 767.98px) {
+    .btn-group {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    .btn-group .btn {
+        margin-bottom: 0.5rem;
+    }
+}
+
+/* chip style select box */
+
+/* Custom CSS for Chips Select Box */
+
+.chips-select-container {
+    position: relative;
+    width: 100%;
+}
+
+.selected-chips-display {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem; /* Space between chips */
+    padding: 0.5rem 0.75rem;
+    min-height: calc(2.25rem + 2px); /* Match default input height */
+    cursor: text;
+    background-color: #fff;
+    border: 1px solid #ced4da;
+    border-radius: 0.375rem;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+.selected-chips-display:focus-within {
+    border-color: #86b7fe;
+    outline: 0;
+    box-shadow: 0 0 0 0.25rem rgba(13,110,253,.25);
+}
+
+.chips-input {
+    flex-grow: 1;
+    border: none;
+    outline: none;
+    padding: 0;
+    margin: 0;
+    background: transparent;
+    font-size: 1rem; /* Match form-control font size */
+    min-width: 50px; /* Ensure input is visible even if no chips */
+}
+
+/* Style for individual chips */
+.chip {
+    display: inline-flex;
+    align-items: center;
+    background-color: #e0e0e0; /* Light grey background */
+    border-radius: 0.25rem;
+    padding: 0.25rem 0.5rem;
+    font-size: 0.875rem;
+    color: #333;
+    white-space: nowrap;
+    margin-bottom: 0.25rem; /* For wrapping */
+}
+
+.chip-close {
+    margin-left: 0.5rem;
+    cursor: pointer;
+    font-size: 1rem;
+    line-height: 1;
+    color: #666;
+    transition: color 0.2s ease;
+}
+
+.chip-close:hover {
+    color: #000;
+}
+
+/* Dropdown for options */
+.options-dropdown {
+    position: absolute;
+    top: 100%; /* Position below the input */
+    left: 0;
+    width: 100%;
+    max-height: 200px; /* Scrollable if many options */
+    overflow-y: auto;
+    background-color: #fff;
+    border: 1px solid #ced4da;
+    border-radius: 0.375rem;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+    z-index: 1000; /* Ensure it's above other content */
+    display: none; /* Hidden by default, shown by JS */
+}
+
+.options-dropdown.show {
+    display: block;
+}
+
+.option-item {
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.option-item:hover {
+    background-color: #f0f0f0;
+}
+
+.option-item.selected {
+    background-color: #e9ecef; /* Indicate already selected */
+    color: #6c757d;
+    cursor: default;
+}
+
+.option-item.hidden {
+    display: none; /* Hidden by JS when selected or filtered out */
+}
+
+.option-item.disabled {
+    color: #6c757d;
+    cursor: not-allowed;
+    background-color: #f8f9fa;
+}

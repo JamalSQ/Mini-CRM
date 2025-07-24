@@ -42,19 +42,25 @@
                     <td>{{ $user->email }}</td>
                     <td>{{ $user->phone_number }}</td>
                    <td>{!! ($user->is_active)?'<span class="badge bg-success">active</span>':'<span class="badge bg-danger">not active</span>'; !!}</td>
-                   <td>{!! ($user->role == 'user')?'<span class="badge bg-info">User</span>':'<span class="badge bg-success">Admin</span>'; !!}</td>
+                 <td>
+                      @forelse ($user->getRoleNames() as $role)
+                          <span class="badge bg-primary me-1">{{ $role }}</span>
+                      @empty
+                          <span class="badge bg-secondary">No Role</span>
+                      @endforelse
+                    </td>
                     <td class="text-center">
                       <div class="d-flex justify-content-center gap-1">
-                        <a href="{{ route('users.show', $user->id) }}" class="btn btn-info btn-xs px-2 py-1" title="View">
+                        <a href="{{ route('users.show', $user->id) }}" class="btn btn-sm btn-outline-info px-2 py-1" title="View">
                           <i class="fa-solid fa-eye"></i>
                         </a>
-                        <a href="{{ route('users.edit', $user->id) }}" class="btn btn-warning btn-xs px-2 py-1" title="Edit">
+                        <a href="{{ route('users.edit', $user->id) }}" class="btn btn-sm btn-outline-warning px-2 py-1" title="Edit">
                           <i class="fas fa-edit"></i>
                         </a>
                         <form action="{{ route('users.destroy', $user->id) }}" method="POST" class="ajax-form d-inline delete-form">
                           @csrf
                           @method('DELETE')
-                          <button type="submit" class="btn btn-danger btn-xs px-2 py-1" title="Delete">
+                          <button type="submit" class="btn btn-sm btn-outline-danger px-2 py-1" title="Delete">
                             <i class="fas fa-trash-alt"></i>
                           </button>
                         </form>

@@ -43,16 +43,16 @@
                                         <td>{{ $client->contact_phone_number }}</td>
                                         <td class="text-center">
                                             <div class="d-flex justify-content-center gap-1">
-                                                <a href="{{ route('clients.show', $client->id) }}" class="btn btn-info btn-xs px-2 py-1" title="View">
+                                                <a href="{{ route('clients.show', $client->id) }}" class="btn btn-sm btn-outline-info px-2 py-1" title="View">
                                                     <i class="fa-solid fa-eye"></i>
                                                 </a>
-                                                <a href="{{ route('clients.edit', $client->id) }}" class="btn btn-warning btn-xs px-2 py-1" title="Edit">
+                                                <a href="{{ route('clients.edit', $client->id) }}" class="btn btn-sm btn-outline-warning px-2 py-1" title="Edit">
                                                     <i class="fas fa-edit"></i>
                                                 </a>
                                                 <form action="{{ route('clients.destroy', $client->id) }}" method="POST" class="ajax-form d-inline delete-form">
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger btn-xs px-2 py-1" title="Delete"
+                                                    <button type="submit" class="btn btn-sm btn-outline-danger px-2 py-1" title="Delete"
                                                         onclick="return confirm('Are you sure you want to delete this client?');">
                                                         <i class="fas fa-trash-alt"></i>
                                                     </button>

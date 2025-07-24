@@ -83,8 +83,9 @@
                  <div class="col-md-6 mt-2">
                   <div class="form-floating">
                     <select name="role" id="role" class="form-select @error('role') is-invalid @enderror">
-                      <option value="user">User</option>
-                      <option value="admin">Admin</option>
+                      @foreach($roles as $role)
+                        <option value="{{$role->name}}">{{$role->name}}</option>
+                      @endforeach
                     </select>
                     <label for="phone_number">Role</label>
                     @error('role')<div class="invalid-feedback small">{{ $message }}</div>@enderror
