@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
+use Jenssegers\Agent\Agent;
+
 
 class AuthController extends Controller
 {
@@ -54,15 +56,40 @@ class AuthController extends Controller
             'password'=>'required',
         ]);
 
-        $data = [
-            'first_name'=>$request->firstName,
-            'last_name'=>$request->lastName,
-            'email'=>$request->email,
-            'password'=>Hash::make($request->password),
-        ];
+        try{
+            $agent = new Agent(); // Instantiate the User-Agent parser
+
+            $userData['terms_signature'] = hash('sha256', $request->ip() . $request->userAgent() . now()); // Simple signature
+            $userData['terms_signature_ip'] = $request->ip();
+            $userData['terms_signature_user_agent'] = $request->userAgent();
+
+            // Device Information (using jenssegers/agent)
+            $userData['terms_signature_device'] = $agent->device() ?: 'Unknown';
+            $userData['terms_signature_device_type'] = $agent->isDesktop() ? 'desktop' : ($agent->isTablet() ? 'tablet' : ($agent->isMobile() ? 'mobile' : 'unknown'));
+            $userData['terms_signature_device_name'] = $agent->device() ?: null;
+            $userData['terms_signature_device_manufacturer'] = $agent->device() ?: null; // Agent sometimes maps this to device
+            $userData['terms_signature_device_os'] = $agent->platform() ?: null;
+            $userData['terms_signature_device_os_version'] = $agent->version($agent->platform()) ?: null;
+
+            // Browser Information
+            $userData['terms_signature_browser'] = $agent->browser() ?: null;
+            $userData['terms_signature_browser_version'] = $agent->version($agent->browser()) ?: null;
+            $userData['terms_signature_browser_language'] = $request->header('Accept-Language') ?: null; // Or use $request->getPreferredLanguage()
+            $userData['terms_signature_browser_platform'] = $agent->platform() ?: null; // Often same as device OS
+                \Log::info("users information",$userData);
+            }catch(\Exception $e){
+                \Log::info("users in catch",['array'=>$e]);
+            }
+
+            $userData['first_name'] = $request->firstName;
+            $userData['last_name']=$request->lastName;
+            $userData['email']=$request->email;
+            $userData['address']=$request->address;
+            $userData['phone_number']=$request->phone_number;
+            $userData['password']=Hash::make($request->password);
 
         try{
-            User::create($data);
+            User::create($userData);
             Log::info("User registration passed");
             return redirect()->back()->with(['success'=>'User Created successfully']);
         }catch(\Exception $e){

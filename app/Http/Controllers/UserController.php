@@ -34,6 +34,7 @@ class UserController extends Controller
      */
     public function store(StoreUserRequest $request)
     {
+    
         $data = [
             'first_name'   => $request->first_name,
             'last_name'    => $request->last_name,

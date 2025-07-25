@@ -16,7 +16,7 @@ use Spatie\Permission\Traits\HasRoles;
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable, SoftDeletes,HasRoles;
+    use HasFactory, Notifiable, SoftDeletes, HasRoles;
 
     /**
      * The attributes that are mass assignable.
@@ -33,9 +33,23 @@ class User extends Authenticatable
         'terms_accepted_at',
         'role',
         'is_active',
-        'is_admin',
-    ];
 
+        'terms_signature',
+        'terms_signature_ip',
+        'terms_signature_user_agent',
+
+        'terms_signature_device',
+        'terms_signature_device_type',
+        'terms_signature_device_name',
+        'terms_signature_device_manufacturer',
+        'terms_signature_device_os',
+        'terms_signature_device_os_version',
+
+        'terms_signature_browser',
+        'terms_signature_browser_version',
+        'terms_signature_browser_language',
+        'terms_signature_browser_platform',
+    ];
     /**
      * The attributes that should be hidden for serialization.
      *

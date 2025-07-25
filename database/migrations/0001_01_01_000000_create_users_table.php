@@ -23,38 +23,19 @@ return new class extends Migration
             $table->string('role')->default('user'); // Default role is 'user'
             $table->boolean('is_active')->default(true);
             $table->boolean('is_admin')->default(false);
-            $table->boolean('is_verified')->default(false);
-            $table->string('verification_token')->nullable();
-            $table->string('profile_picture')->nullable();
-            $table->string('locale')->default('en'); // Default locale is 'en'
-            $table->string('timezone')->default('UTC'); // Default timezone is 'UTC'
-            $table->string('theme')->default('light'); // Default theme is 'light'
-            $table->string('two_factor_secret')->nullable();
-            $table->boolean('two_factor_confirmed')->default(false);
-            $table->string('two_factor_recovery_codes')->nullable();
-            $table->string('terms_version')->nullable();
-            $table->string('terms_hash')->nullable();
             $table->string('terms_signature')->nullable();
             $table->string('terms_signature_ip')->nullable();
             $table->string('terms_signature_user_agent')->nullable();
             $table->string('terms_signature_device')->nullable();
-            $table->string('terms_signature_location')->nullable();
-            $table->string('terms_signature_browser')->nullable();
-            $table->string('terms_signature_os')->nullable();
             $table->string('terms_signature_device_type')->nullable();
-            $table->string('terms_signature_device_id')->nullable();
             $table->string('terms_signature_device_name')->nullable();
-            $table->string('terms_signature_device_model')->nullable();
             $table->string('terms_signature_device_manufacturer')->nullable();
             $table->string('terms_signature_device_os')->nullable();
             $table->string('terms_signature_device_os_version')->nullable();
-            $table->string('terms_signature_device_browser')->nullable();
-            $table->string('terms_signature_device_browser_version')->nullable();
-            $table->string('terms_signature_device_browser_language')->nullable();
-            $table->string('terms_signature_device_browser_platform')->nullable();
-            $table->string('terms_signature_device_browser_engine')->nullable();
-            $table->string('terms_signature_device_browser_engine_version')->nullable();
-            $table->string('terms_signature_device_browser_engine_name')->nullable();   
+            $table->string('terms_signature_browser')->nullable();
+            $table->string('terms_signature_browser_version')->nullable();
+            $table->string('terms_signature_browser_language')->nullable();
+            $table->string('terms_signature_browser_platform')->nullable();
             $table->datetime('terms_accepted_at')->nullable();
             $table->rememberToken();
             $table->timestamps();
