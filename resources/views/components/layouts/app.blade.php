@@ -19,9 +19,11 @@
 
     <!-- Bootstrap icons -->
     <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
-    />
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+
+    <!-- Multi select box -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/habibmhamadi/multi-select-tag@4.0.1/dist/css/multi-select-tag.min.css">
 
     <!-- Your custom CSS -->
     <link href="{{asset('css/style.css')}}" rel="stylesheet" />
@@ -58,6 +60,9 @@
     <!-- Font Awesome -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/js/fontawesome.min.js"></script>
 
+    <!-- Multi select box -->
+    <!-- End of <body> -->
+    <script src="https://cdn.jsdelivr.net/gh/habibmhamadi/multi-select-tag@4.0.1/dist/js/multi-select-tag.min.js"></script>
     <!-- Your custom scripts -->
     <script src="{{asset('js/style.js')}}"></script>
     <script src="{{asset('js/custom.js')}}"></script>
@@ -65,7 +70,8 @@
 
     <script>
         $(document).ready(function() {
-            const TableIds = ['clients-table', 'Project-table', 'tasks-table', 'users-table','roles-tables'];
+            // HTML data table initilization
+            const TableIds = ['clients-table', 'Project-table', 'tasks-table', 'users-table', 'roles-tables'];
             const commonDataTableOptions = {
                 "responsive": true,
                 "pageLength": 10,
@@ -78,6 +84,23 @@
             TableIds.forEach(function(id) {
                 $('#' + id).DataTable(commonDataTableOptions);
             });
+
+
+            // Multi select box initilization
+            const multiSelectBoxIds = ['role'];
+
+            const common = {
+                // maxSelection: 5, // default unlimited.
+                required: true, // default false.
+                // placeholder: 'Search tags', // default 'Search'.
+                onChange: function(selected) { // Callback when selection changes.
+                    console.log('Selection changed:', selected);
+                }
+            }
+            multiSelectBoxIds.map(function(id){
+                new MultiSelectTag(id,common );
+            });
+            
         });
     </script>
 </body>

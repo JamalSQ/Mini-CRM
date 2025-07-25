@@ -76,8 +76,7 @@
                 </div>
                 <div class="col-md-6 mt-2">
                   <div class="form-floating">
-                    <select name="role" id="role" class="form-select @error('role') is-invalid @enderror">
-                      <option value="" disabled>Select a Role</option> {{-- Optional: Add a default empty option --}}
+                    <select name="role[]" id="role" multiple class="form-select @error('role') is-invalid @enderror">
                       @foreach($roles as $role)
                       <option value="{{ $role->name }}"
                         {{ $user->hasRole($role->name) ? 'selected' : '' }}>
@@ -85,7 +84,6 @@
                       </option>
                       @endforeach
                     </select>
-                    <label for="role">Role</label>
                     @error('role')
                     <div class="invalid-feedback small">{{ $message }}</div>
                     @enderror

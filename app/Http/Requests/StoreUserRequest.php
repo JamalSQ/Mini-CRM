@@ -29,7 +29,7 @@ class StoreUserRequest extends FormRequest
             'address' => ['string', 'max:255'],
             'phone_number' => ['string', 'max:255'],
             'is_active' => ['boolean', 'nullable'],
-            'role' => ['required', 'string', 'exists:roles,name'],
+            'role' => ['required','exists:roles,name'],
         ];
     }
 }
