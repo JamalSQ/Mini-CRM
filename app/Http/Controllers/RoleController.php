@@ -8,7 +8,6 @@ use App\Utils\Reply;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
-use Illuminate\Support\Facades\DB;
 
 class RoleController extends Controller
 {

@@ -15,23 +15,30 @@ use Illuminate\Support\Facades\Auth;
 
 class TaskController extends Controller
 {
+    public function __construct()
+    {
+        $this->authorizeResource(Task::class, 'task');
+    }
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-
-        $tasks = Task::with('project')->where('user_id',Auth::id())->get();
+        // Policy is automatically checked by authorizeResource for 'viewAny'
+        $loggedInUser = Auth::id(); 
+        $tasks = Task::where('client_id',$loggedInUser)->get();
         return view('tasks.index', ['tasks' => $tasks]);
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create(Task $task)
+    public function create(Task $task) // Note: $task here is a convention, policy handles it
     {
+        // Policy is automatically checked by authorizeResource for 'create'
         $projects = Project::all();
-        $users = User::all();
+        $users = User::where('is_active','1')->get();
         $status = TaskStatus::cases();
         $clients = Client::all();
 
@@ -43,6 +50,7 @@ class TaskController extends Controller
      */
     public function store(Request $request, StoreTaskRequest $storeTaskRequest)
     {
+        // Policy is automatically checked by authorizeResource for 'create'
         try {
             Task::create($storeTaskRequest->validated());
             return Reply::success("Task created successfully", 200, route('tasks.index'));
@@ -56,6 +64,7 @@ class TaskController extends Controller
      */
     public function show(Task $task)
     {
+        // Policy is automatically checked by authorizeResource for 'view'
         return view('tasks.show', ['task' => $task]);
     }
 
@@ -64,8 +73,9 @@ class TaskController extends Controller
      */
     public function edit(Task $task)
     {
+        // Policy is automatically checked by authorizeResource for 'update'
         $clients = Client::all();
-        $users = User::all();
+        $users = User::where('is_active','1')->get();
         $projects = Project::all();
         $statuses = TaskStatus::cases();
 
@@ -83,6 +93,7 @@ class TaskController extends Controller
      */
     public function update(Request $request, Task $task, UpdatedTaskRequest $updatedTaskRequest)
     {
+        // Policy is automatically checked by authorizeResource for 'update'
         try {
             $task->update($updatedTaskRequest->validated());
             return Reply::success("Task updated successfully", 200, route('tasks.index'));
@@ -96,11 +107,12 @@ class TaskController extends Controller
      */
     public function destroy(Task $task)
     {
+        // Policy is automatically checked by authorizeResource for 'delete'
         try {
             $task->delete();
             return Reply::success("Task deleted successfully", 200, route('tasks.index'));
         } catch (\Exception $e) {
-            return Reply::error("Task deleted successfully", 200, $e->getMessage(), route('tasks.index'));
+            return Reply::error("Unable to delete task", 422, $e->getMessage());
         }
     }
 }

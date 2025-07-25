@@ -14,9 +14,11 @@
               Users
               <span class="badge bg-light text-primary ms-2" id="user-count">{{ count($users) }}</span>
             </h2>
+            @can('create-user')
             <a href="{{ route('users.create') }}" class="btn btn-outline-primary btn-sm fw-semibold px-3">
               <i class="fas fa-plus me-1"></i> Add User
             </a>
+            @endcan
           </div>
           <div class="card-body p-3">
             <div class="table-responsive">
@@ -28,9 +30,13 @@
                     <th>Last Name</th>
                     <th>Email</th>
                     <th>Phone Number</th>
+                    @if(auth()->user()->can('edit-user') && auth()->user()->can('view-specific-user') && auth()->user()->can('delete-user') && auth()->user()->can('create-user') && auth()->user()->hasRole('admin'))
                     <th>Active</th>
                     <th>Role</th>
+                    @endif
+                    @if(auth()->user()->can('edit-user') || auth()->user()->can('view-specific-user') || auth()->user()->can('delete-user'))
                     <th class="text-center">Actions</th>
+                    @endif
                   </tr>
                 </thead>
                 <tbody id="users-table-body">
@@ -41,22 +47,31 @@
                     <td>{{ $user->last_name }}</td>
                     <td>{{ $user->email }}</td>
                     <td>{{ $user->phone_number }}</td>
-                   <td>{!! ($user->is_active)?'<span class="badge bg-success">active</span>':'<span class="badge bg-danger">not active</span>'; !!}</td>
-                 <td>
+
+                    @if(auth()->user()->can('edit-user') && auth()->user()->can('view-specific-user') && auth()->user()->can('delete-user') && auth()->user()->can('create-user') && auth()->user()->hasRole('admin'))
+                    <td>{!! ($user->is_active)?'<span class="badge bg-success">active</span>':'<span class="badge bg-danger">not active</span>'; !!}</td>
+                    <td>
                       @forelse ($user->getRoleNames() as $role)
-                          <span class="badge bg-primary me-1">{{ $role }}</span>
+                      <span class="badge bg-primary me-1">{{ $role }}</span>
                       @empty
-                          <span class="badge bg-secondary">No Role</span>
+                      <span class="badge bg-secondary">No Role</span>
                       @endforelse
                     </td>
+                    @endif
+                    @if(auth()->user()->can('edit-user') || auth()->user()->can('view-specific-user') || auth()->user()->can('delete-user'))
                     <td class="text-center">
                       <div class="d-flex justify-content-center gap-1">
+                        @can('view-specific-user')
                         <a href="{{ route('users.show', $user->id) }}" class="btn btn-sm btn-outline-info px-2 py-1" title="View">
                           <i class="fa-solid fa-eye"></i>
                         </a>
+                        @endcan
+                        @can('edit-user')
                         <a href="{{ route('users.edit', $user->id) }}" class="btn btn-sm btn-outline-warning px-2 py-1" title="Edit">
                           <i class="fas fa-edit"></i>
                         </a>
+                        @endcan
+                        @can('delete-user')
                         <form action="{{ route('users.destroy', $user->id) }}" method="POST" class="ajax-form d-inline delete-form">
                           @csrf
                           @method('DELETE')
@@ -64,8 +79,10 @@
                             <i class="fas fa-trash-alt"></i>
                           </button>
                         </form>
+                        @endcan
                       </div>
                     </td>
+                    @endif
                   </tr>
                   @empty
                   <tr>

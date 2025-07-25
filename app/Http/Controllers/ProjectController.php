@@ -18,9 +18,8 @@ class ProjectController extends Controller
      * Display a listing of the resource.
      */
     public function index()
-    {   
-        $userId = Auth::id();
-        $projects = Project::with(['user', 'client'])->where('user_id', $userId)->get();
+    {   $this->authorize('viewAny',User::class);
+        $projects = Project::where('user_id',Auth::id())->with(['user', 'client'])->get();
         return view('projects.index', ['projects' => $projects]);
     }
 
@@ -29,8 +28,9 @@ class ProjectController extends Controller
      */
     public function create()
     {
+        $this->authorize('create',User::class);
         $clients = Client::all();
-        $Users =  User::all();
+        $Users =  User::where('is_active','1')->get();
         $status = ProjectStatus::cases();
 
         return view('projects.create', ['clients' => $clients, 'users' => $Users, 'statuses' => $status]);
@@ -41,12 +41,12 @@ class ProjectController extends Controller
      */
     public function store(StoreProjectRequest $request)
     {
-
+          $this->authorize('create',User::class);
         try {
             Project::create($request->validated());
             return Reply::success("Project created successfully", 200, route('projects.index'));
         } catch (\Exception $e) {
-            return Reply::success("Project created successfully", 200, $e->getMessage());
+            return Reply::error("unable to create Project", 422, $e->getMessage());
         }
     }
 
@@ -55,7 +55,7 @@ class ProjectController extends Controller
      */
     public function show(Project $project)
     {
-
+        $this->authorize('specificView',User::class);
         return view('projects.show', ['project' => $project]);
     }
 
@@ -64,8 +64,9 @@ class ProjectController extends Controller
      */
     public function edit(Project $project)
     {
+        $this->authorize('update',User::class);
         $clients = Client::all();
-        $users =  User::all();
+        $users =  User::where('is_active','1')->get();
         $projects = Project::all();
         $status = ProjectStatus::cases();
 
@@ -77,7 +78,7 @@ class ProjectController extends Controller
      */
     public function update(Request $requests, Project $project, UpdatedProjectRequest $request)
     {
-        // dd($requests->all());
+        $this->authorize('update',User::class);
         try {
             $project->update($request->validated());
             return Reply::success("Project updated successfully", 200, route('projects.index'));
@@ -91,6 +92,7 @@ class ProjectController extends Controller
      */
     public function destroy(Project $project)
     {
+        $this->authorize('delete',User::class);
         try {
             $project->delete();
             return Reply::success("Project deleted successfully", 200, route('projects.index'));

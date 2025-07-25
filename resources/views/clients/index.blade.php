@@ -16,9 +16,11 @@
                             Clients
                             <span class="badge bg-light text-primary ms-2" id="client-count">{{ count($clients) }}</span>
                         </h2>
+                        @can('create-client')
                         <a href="{{ route('clients.create') }}" class="btn btn-outline-primary btn-sm fw-semibold px-3">
                             <i class="fas fa-plus me-1"></i> Add Client
                         </a>
+                        @endcan
                     </div>
                     <div class="card-body p-3">
                         <div class="table-responsive">
@@ -30,25 +32,33 @@
                                         <th scope="col" style="width: 20%;">Contact Name</th>
                                         <th scope="col" style="width: 25%;">Email</th>
                                         <th scope="col" style="width: 15%;">Phone</th>
+                                        @if(auth()->user()->can('edit-client') || auth()->user()->can('view-specific-client') || auth()->user()->can('delete-client'))
                                         <th scope="col" class="text-center" style="width: 15%;">Actions</th>
+                                        @endif
                                     </tr>
                                 </thead>
                                 <tbody id="clients-table-body">
-                                    @foreach($clients as $index => $client)
+                                    @forelse($clients as $index => $client)
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $client->company_name }}</td>
                                         <td>{{ $client->contact_name }}</td>
                                         <td>{{ $client->contact_email }}</td>
                                         <td>{{ $client->contact_phone_number }}</td>
+                                        @if(auth()->user()->can('edit-client') || auth()->user()->can('view-specific-client') || auth()->user()->can('delete-client'))
                                         <td class="text-center">
                                             <div class="d-flex justify-content-center gap-1">
+                                                @can('view-specific-client')
                                                 <a href="{{ route('clients.show', $client->id) }}" class="btn btn-sm btn-outline-info px-2 py-1" title="View">
                                                     <i class="fa-solid fa-eye"></i>
                                                 </a>
+                                                @endcan
+                                                @can('edit-client')
                                                 <a href="{{ route('clients.edit', $client->id) }}" class="btn btn-sm btn-outline-warning px-2 py-1" title="Edit">
                                                     <i class="fas fa-edit"></i>
                                                 </a>
+                                                @endcan
+                                                @can('delete-client')
                                                 <form action="{{ route('clients.destroy', $client->id) }}" method="POST" class="ajax-form d-inline delete-form">
                                                     @csrf
                                                     @method('DELETE')
@@ -57,21 +67,34 @@
                                                         <i class="fas fa-trash-alt"></i>
                                                     </button>
                                                 </form>
+                                                @endcan
                                             </div>
                                         </td>
+                                        @endif
                                     </tr>
-                                    @endforeach
+                                    @empty
+                                    <tr>
+                                        <td colspan="6" class="text-center py-4">
+                                            <p class="lead text-muted mb-0 small">No clients found. Start by adding a new one!</p>
+                                            @can('create-client')
+                                            <a href="{{ route('clients.create') }}" class="btn btn-success btn-sm mt-2">
+                                                <i class="fas fa-plus me-1"></i> Add Your First Client
+                                            </a>
+                                            @endcan
+                                        </td>
+                                    </tr>
+                                    @endforelse
                                 </tbody>
                             </table>
                         </div>
                         {{--
                         <div class="mt-3">
                             {{ $clients->links() }}
+                        </div>
+                        --}}
                     </div>
-                    --}}
                 </div>
             </div>
         </div>
-    </div>
     </div>
 </x-layouts.app>

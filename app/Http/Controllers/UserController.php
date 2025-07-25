@@ -16,6 +16,7 @@ class UserController extends Controller
      */
     public function index()
     {
+        $this->authorize('viewAny', User::class);
         $users = User::with('roles')->get();
         return view('users.index', ['users' => $users]);
     }
@@ -25,6 +26,7 @@ class UserController extends Controller
      */
     public function create()
     {
+        $this->authorize('create', User::class);
         $roles = Role::all();
         return view('users.create', ['roles' => $roles]);
     }
@@ -34,7 +36,7 @@ class UserController extends Controller
      */
     public function store(StoreUserRequest $request)
     {
-    
+        $this->authorize('create', User::class);
         $data = [
             'first_name'   => $request->first_name,
             'last_name'    => $request->last_name,
@@ -59,6 +61,8 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
+         $this->authorize('specificView', $user);
+
         $user->load('roles');
         return view('users.show', ['user' => $user]);
     }
@@ -68,6 +72,8 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
+        $this->authorize('update', $user);
+        
         $user->load('roles');
         $roles = Role::all();
         $userRoleIds = $user->roles->pluck('id')->toArray();
@@ -84,6 +90,7 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user, UpdatedUserRequest $updated_user_request)
     {
+         $this->authorize('update', $user);
         $data = [
             'first_name'   => $request->first_name,
             'last_name'    => $request->last_name,
@@ -107,6 +114,7 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
+        $this->authorize('delete', $user);
         try {
             $user->syncRoles([]); // Remove all roles
             $user->syncPermissions([]); // Remove all direct permissions

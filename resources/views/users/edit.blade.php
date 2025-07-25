@@ -92,7 +92,7 @@
                 <div class="col-md-3 mt-4">
                   <label for="is_active" class="mx-3">Is Active</label>
                   {{-- Hidden input to ensure a value is always sent for 'is_active' --}}
-                  <!-- <input type="hidden" name="is_active" value="0">  -->
+                  <input type="hidden" name="is_active" value="0"> 
                   <input type="checkbox" name="is_active" id="is_active" value="{{ old('is_active', $user->is_active) }}" class="@error('is_active') is-invalid @enderror" {{$user->is_active?'checked':''}}>
                   @error('is_active')<div class="invalid-feedback small">{{ $message }}</div>@enderror
                 </div>

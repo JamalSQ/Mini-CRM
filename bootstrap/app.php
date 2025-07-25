@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Middleware\checkAuth;
+use App\Http\Middleware\roleCheckMiddleware;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -13,7 +14,8 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware): void {
          $middleware->alias([
-            'checkAuth' => checkAuth::class
+            'checkAuth' => checkAuth::class,
+            'roleCheck'=> roleCheckMiddleware::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {

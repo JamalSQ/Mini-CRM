@@ -14,9 +14,11 @@
                             Tasks
                             <span class="badge bg-light text-primary ms-2" id="task-count">{{ count($tasks) }}</span>
                         </h2>
+                        @can('create-task')
                         <a href="{{ route('tasks.create') }}" class="btn btn-outline-primary btn-sm fw-semibold px-3">
                             <i class="fas fa-plus me-1"></i> Add Task
                         </a>
+                        @endcan
                     </div>
                     <div class="card-body p-3">
                         <div class="table-responsive">
@@ -29,7 +31,9 @@
                                         <th>User</th>
                                         <th>Deadline</th>
                                         <th>Status</th>
+                                        @if(auth()->user()->can('edit-task') || auth()->user()->can('view-specific-task') || auth()->user()->can('delete-task'))
                                         <th class="text-center">Actions</th>
+                                        @endif
                                     </tr>
                                 </thead>
                                 <tbody id="tasks-table-body">
@@ -41,14 +45,20 @@
                                         <td>{{ $task->user->first_name ?? '' }} {{ $task->user->last_name ?? '' }}</td>
                                         <td>{{ $task->deadline->format('Y-m-d') }}</td>
                                         <td><span class="badge bg-{{$task->status->color()}}">{{ $task->status->label() }}</span></td>
+                                        @if(auth()->user()->can('edit-task') || auth()->user()->can('view-specific-task') || auth()->user()->can('delete-task'))
                                         <td class="text-center">
                                             <div class="d-flex justify-content-center gap-1">
+                                                @can('view-specific-task')
                                                 <a href="{{ route('tasks.show', $task->id) }}" class="btn btn-sm btn-outline-info px-2 py-1" title="View">
                                                     <i class="fa-solid fa-eye"></i>
                                                 </a>
+                                                @endcan
+                                                @can('edit-task')
                                                 <a href="{{ route('tasks.edit', $task->id) }}" class="btn btn-sm btn-outline-warning px-2 py-1" title="Edit">
                                                     <i class="fas fa-edit"></i>
                                                 </a>
+                                                @endcan
+                                                @can('delete-task')
                                                 <form action="{{ route('tasks.destroy', $task->id) }}" method="POST" class="ajax-form d-inline delete-form">
                                                     @csrf
                                                     @method('DELETE')
@@ -56,10 +66,12 @@
                                                         <i class="fas fa-trash-alt"></i>
                                                     </button>
                                                 </form>
+                                                @endcan
                                             </div>
                                         </td>
+                                        @endif
                                     </tr>
-                                    @endforeach
+                                   @endforeach
                                 </tbody>
                             </table>
                         </div>
