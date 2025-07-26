@@ -89,7 +89,8 @@ class AuthController extends Controller
             $userData['password']=Hash::make($request->password);
 
         try{
-            User::create($userData);
+            $user = User::create($userData);
+            $user->assignRole('user');
             Log::info("User registration passed");
             return redirect()->back()->with(['success'=>'User Created successfully']);
         }catch(\Exception $e){

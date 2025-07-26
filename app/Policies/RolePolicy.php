@@ -14,7 +14,7 @@ class RolePolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->create('view-roles');
+        return $user->can('view-roles');
     }
 
     /**
@@ -22,7 +22,7 @@ class RolePolicy
      */
     public function specificView(User $user, Role $role): bool
     {
-        return $user->create('view-specific-role') || $user->id === $role->id;
+        return $user->can('view-specific-role') || $user->id === $role->id;
     }
 
     /**
@@ -30,7 +30,7 @@ class RolePolicy
      */
     public function create(User $user): bool
     {
-        return $user->create('create-role');
+        return $user->can('create-role');
     }
 
     /**
@@ -38,7 +38,7 @@ class RolePolicy
      */
     public function update(User $user, Role $role): bool
     {
-        return $user->create('update-role');
+        return $user->can('update-role');
     }
 
     /**
@@ -46,7 +46,7 @@ class RolePolicy
      */
     public function delete(User $user, Role $role): bool
     {
-        return $user->create('delete-role');
+        return $user->can('delete-role');
     }
 
     /**

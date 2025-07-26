@@ -39,9 +39,11 @@
                     </div>
                     <div class="col-12 col-md-8 bg-light p-4">
                         <div class="d-flex justify-content-end mb-2 gap-2">
+                            @can('edit-project')
                             <a href="{{ route('projects.edit', $project->id) }}" class="btn btn-primary btn-sm px-3 shadow-sm">
                                 <i class="fas fa-edit me-1"></i> Edit
                             </a>
+                            @endcan
                             <a href="{{ route('projects.index') }}" class="btn btn-outline-secondary btn-sm px-3 shadow-sm">
                                 <i class="fas fa-arrow-left me-1"></i> Back
                             </a>

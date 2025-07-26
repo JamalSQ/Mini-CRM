@@ -5,7 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
-use App\Models\User; // Assuming you want to assign roles/permissions to a user here
+use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 
 class RolesAndPermissionsSeeder extends Seeder
@@ -18,54 +18,87 @@ class RolesAndPermissionsSeeder extends Seeder
         // Reset cached roles and permissions
         app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
 
-        // Create Permissions
-        Permission::firstOrCreate(['name' => 'view-users']);
-        Permission::firstOrCreate(['name' => 'view-specific-user']);
-        Permission::firstOrCreate(['name' => 'create-user']);
-        Permission::firstOrCreate(['name' => 'edit-user']);
-        Permission::firstOrCreate(['name' => 'delete-user']);
+        // Define all permissions
+        $permissions = [
+            // Users
+            'view-users', 'view-specific-user', 'create-user', 'edit-user', 'delete-user',
+            // Clients
+            'view-clients', 'view-specific-client', 'create-client', 'edit-client', 'delete-client',
+            // Projects
+            'view-projects', 'view-specific-project', 'create-project', 'edit-project', 'delete-project',
+            // Tasks
+            'view-tasks', 'view-specific-task', 'create-task', 'edit-task', 'delete-task',
+            // Roles
+            'view-roles', 'view-specific-role', 'create-role', 'edit-role', 'delete-role',
+        ];
 
-        Permission::firstOrCreate(['name' => 'view-clients']);
-        Permission::firstOrCreate(['name' => 'view-specific-client']);
-        Permission::firstOrCreate(['name' => 'create-client']);
-        Permission::firstOrCreate(['name' => 'edit-client']);
-        Permission::firstOrCreate(['name' => 'delete-client']);
+        // Create all permissions if they don't exist
+        foreach ($permissions as $permission) {
+            Permission::firstOrCreate(['name' => $permission]);
+        }
 
-        Permission::firstOrCreate(['name' => 'view-projects']);
-        Permission::firstOrCreate(['name' => 'view-specific-project']);
-        Permission::firstOrCreate(['name' => 'create-project']);
-        Permission::firstOrCreate(['name' => 'edit-project']);
-        Permission::firstOrCreate(['name' => 'delete-project']);
+        // --- Create Roles and assign permissions ---
 
-        Permission::firstOrCreate(['name' => 'view-tasks']);
-        Permission::firstOrCreate(['name' => 'view-specific-task']);
-        Permission::firstOrCreate(['name' => 'create-task']);
-        Permission::firstOrCreate(['name' => 'edit-task']);
-        Permission::firstOrCreate(['name' => 'delete-task']);
+        // 1. Super Admin Role: Gets all permissions
+        $superAdminRole = Role::firstOrCreate(['name' => 'superAdmin']);
+        $superAdminRole->givePermissionTo(Permission::all());
 
-        Permission::firstOrCreate(['name' => 'view-roles']);
-        Permission::firstOrCreate(['name' => 'view-specific-role']);
-        Permission::firstOrCreate(['name' => 'create-role']);
-        Permission::firstOrCreate(['name' => 'edit-role']);
-        Permission::firstOrCreate(['name' => 'delete-role']);
+        // 2. Admin Role: Gets all permissions except role management
+        $adminRole = Role::firstOrCreate(['name' => 'admin']);
+        $adminPermissions = Permission::whereNotIn('name', [
+            'view-roles', 'view-specific-role', 'create-role', 'edit-role', 'delete-role'
+        ])->pluck('name');
+        $adminRole->syncPermissions($adminPermissions); // Use syncPermissions to ensure only these are assigned
 
-        // Create Roles and assign created permissions
-        $adminRole = Role::firstOrCreate(['name' => 'superAdmin']);
-        $adminRole->givePermissionTo(Permission::all()); // Admin gets all permissions
+        // 3. User Role: Gets only 'view' and 'view-specific' permissions
+        $userRole = Role::firstOrCreate(['name' => 'user']);
+        $userPermissions = Permission::whereIn('name', [
+            'view-users', 'view-specific-user',
+            'view-clients', 'view-specific-client',
+            'view-projects', 'view-specific-project',
+            'view-tasks', 'view-specific-task',
+        ])->pluck('name');
+        $userRole->syncPermissions($userPermissions);
 
+        // --- Create Users and assign roles ---
 
-        $superAdminUser = User::firstOrCreate(
-            ['email' => 'editor@example.com'],
+        $superadminUser = User::firstOrCreate(
+            ['email' => 'superadmin@example.com'],
             [
-                'first_name' => 'Editor',
-                'last_name' => 'User',
+                'first_name' => 'Super',
+                'last_name' => 'Admin',
                 'phone_number' => '0987654321',
                 'address' => 'Pakistan',
-                'password' => Hash::make('password'),
+                'password' => Hash::make('12345'),
                 'is_active' => true,
             ]
         );
+        $superadminUser->assignRole('superAdmin');
 
-        $superAdminUser->assignRole('superAdmin');
+        $adminUser = User::firstOrCreate(
+            ['email' => 'admin@example.com'],
+            [
+                'first_name' => 'Admin',
+                'last_name' => 'User',
+                'phone_number' => '1122334455',
+                'address' => 'Pakistan',
+                'password' => Hash::make('12345'),
+                'is_active' => true,
+            ]
+        );
+        $adminUser->assignRole('admin');
+
+        $regularUser = User::firstOrCreate(
+            ['email' => 'user@example.com'],
+            [
+                'first_name' => 'Regular',
+                'last_name' => 'User',
+                'phone_number' => '9988776655',
+                'address' => 'Pakistan',
+                'password' => Hash::make('12345'),
+                'is_active' => true,
+            ]
+        );
+        $regularUser->assignRole('user');
     }
 }

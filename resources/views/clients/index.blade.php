@@ -38,7 +38,7 @@
                                     </tr>
                                 </thead>
                                 <tbody id="clients-table-body">
-                                    @forelse($clients as $index => $client)
+                                    @foreach($clients as $index => $client)
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $client->company_name }}</td>
@@ -72,18 +72,7 @@
                                         </td>
                                         @endif
                                     </tr>
-                                    @empty
-                                    <tr>
-                                        <td colspan="6" class="text-center py-4">
-                                            <p class="lead text-muted mb-0 small">No clients found. Start by adding a new one!</p>
-                                            @can('create-client')
-                                            <a href="{{ route('clients.create') }}" class="btn btn-success btn-sm mt-2">
-                                                <i class="fas fa-plus me-1"></i> Add Your First Client
-                                            </a>
-                                            @endcan
-                                        </td>
-                                    </tr>
-                                    @endforelse
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>

@@ -27,7 +27,7 @@ class TaskController extends Controller
     {
         // Policy is automatically checked by authorizeResource for 'viewAny'
         $loggedInUser = Auth::id(); 
-        $tasks = Task::where('client_id',$loggedInUser)->get();
+        $tasks = Task::where('user_id',$loggedInUser)->get();
         return view('tasks.index', ['tasks' => $tasks]);
     }
 

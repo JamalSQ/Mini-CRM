@@ -51,7 +51,7 @@ class ClientController extends Controller
     */
     public function show(Client $client)
     {
-        $this->authorize('specificView',User::class);
+        $this->authorize('specificView',$client);
         return view('clients.show', ['client' => $client]);
     }
 
@@ -60,7 +60,7 @@ class ClientController extends Controller
      */
     public function edit(Client $client)
     {
-        $this->authorize('update',User::class);
+        $this->authorize('update',$client);
         return view('clients.edit', ['client' => $client]);
     }
 
@@ -69,7 +69,7 @@ class ClientController extends Controller
      */
     public function update(UpdatedClientRequest $updatedvalidatedrequest, Client $client)
     {
-        $this->authorize('update',User::class);
+        $this->authorize('update',$client);
         try {
             $client->update($updatedvalidatedrequest->validated());
             return Reply::success("Client updated successfully", 200, route('clients.index'));
@@ -84,7 +84,7 @@ class ClientController extends Controller
      */
     public function destroy(Client $client)
     {
-        $this->authorize('delete',User::class);
+        $this->authorize('delete',$client);
         try {
             $client->delete();
             return Reply::success("Client deleted successfully", 200, route('clients.index'));

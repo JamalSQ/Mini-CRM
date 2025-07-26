@@ -13,7 +13,7 @@ class ClientPolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->create('view-client');
+        return $user->can('view-client');
     }
 
     /**
@@ -21,7 +21,7 @@ class ClientPolicy
      */
     public function specificView(User $user, Client $client): bool
     {
-        return $user->create('view-specific-client') || $user->id === $client->id;
+        return $user->can('view-specific-client') || $user->id === $client->id;
     }
 
     /**
@@ -29,7 +29,7 @@ class ClientPolicy
      */
     public function create(User $user): bool
     {
-        return $user->create('create-client');
+        return $user->can('create-client');
     }
 
     /**
@@ -37,7 +37,7 @@ class ClientPolicy
      */
     public function update(User $user, Client $client): bool
     {
-        return $user->create('update-client');
+        return $user->can('update-client');
     }
 
     /**
@@ -45,7 +45,7 @@ class ClientPolicy
      */
     public function delete(User $user, Client $client): bool
     {
-        return $user->create('delete-client');
+        return $user->can('delete-client');
     }
 
     /**

@@ -14,11 +14,11 @@
               Users
               <span class="badge bg-light text-primary ms-2" id="user-count">{{ count($users) }}</span>
             </h2>
-            @can('create-user')
+            @if(auth()->user()->can('create-user') && auth()->user()->hasRole('superAdmin'))
             <a href="{{ route('users.create') }}" class="btn btn-outline-primary btn-sm fw-semibold px-3">
               <i class="fas fa-plus me-1"></i> Add User
             </a>
-            @endcan
+            @endif
           </div>
           <div class="card-body p-3">
             <div class="table-responsive">
@@ -30,17 +30,15 @@
                     <th>Last Name</th>
                     <th>Email</th>
                     <th>Phone Number</th>
-                    @if(auth()->user()->can('edit-user') && auth()->user()->can('view-specific-user') && auth()->user()->can('delete-user') && auth()->user()->can('create-user') && auth()->user()->hasRole('admin'))
+                    @if(auth()->user()->can('edit-user') && auth()->user()->can('view-specific-user') && auth()->user()->can('delete-user') && auth()->user()->can('create-user') && auth()->user()->hasRole('superAdmin'))
                     <th>Active</th>
                     <th>Role</th>
-                    @endif
-                    @if(auth()->user()->can('edit-user') || auth()->user()->can('view-specific-user') || auth()->user()->can('delete-user'))
                     <th class="text-center">Actions</th>
                     @endif
                   </tr>
                 </thead>
                 <tbody id="users-table-body">
-                  @forelse($users as $index => $user)
+                  @foreach($users as $index => $user)
                   <tr>
                     <td>{{ $loop->index + 1 }}</td>
                     <td>{{ $user->first_name }}</td>
@@ -48,7 +46,7 @@
                     <td>{{ $user->email }}</td>
                     <td>{{ $user->phone_number }}</td>
 
-                    @if(auth()->user()->can('edit-user') && auth()->user()->can('view-specific-user') && auth()->user()->can('delete-user') && auth()->user()->can('create-user') && auth()->user()->hasRole('admin'))
+                    @if(auth()->user()->can('edit-user') && auth()->user()->can('view-specific-user') && auth()->user()->can('delete-user') && auth()->user()->can('create-user') && auth()->user()->hasRole('superAdmin'))
                     <td>{!! ($user->is_active)?'<span class="badge bg-success">active</span>':'<span class="badge bg-danger">not active</span>'; !!}</td>
                     <td>
                       @forelse ($user->getRoleNames() as $role)
@@ -57,8 +55,6 @@
                       <span class="badge bg-secondary">No Role</span>
                       @endforelse
                     </td>
-                    @endif
-                    @if(auth()->user()->can('edit-user') || auth()->user()->can('view-specific-user') || auth()->user()->can('delete-user'))
                     <td class="text-center">
                       <div class="d-flex justify-content-center gap-1">
                         @can('view-specific-user')
@@ -84,16 +80,7 @@
                     </td>
                     @endif
                   </tr>
-                  @empty
-                  <tr>
-                    <td colspan="8" class="text-center py-4">
-                      <p class="lead text-muted mb-0 small">No users found. Start by adding a new one!</p>
-                      <a href="{{ route('users.create') }}" class="btn btn-success btn-sm mt-2">
-                        <i class="fas fa-plus me-1"></i> Add Your First User
-                      </a>
-                    </td>
-                  </tr>
-                  @endforelse
+                  @endforeach
                 </tbody>
               </table>
             </div>

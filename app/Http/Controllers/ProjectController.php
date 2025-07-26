@@ -19,7 +19,7 @@ class ProjectController extends Controller
      */
     public function index()
     {   $this->authorize('viewAny',User::class);
-        $projects = Project::where('user_id',Auth::id())->with(['user', 'client'])->get();
+        $projects = Project::with(['user', 'client'])->get();
         return view('projects.index', ['projects' => $projects]);
     }
 
@@ -55,7 +55,7 @@ class ProjectController extends Controller
      */
     public function show(Project $project)
     {
-        $this->authorize('specificView',User::class);
+        $this->authorize('specificView', $project);
         return view('projects.show', ['project' => $project]);
     }
 
@@ -64,7 +64,7 @@ class ProjectController extends Controller
      */
     public function edit(Project $project)
     {
-        $this->authorize('update',User::class);
+        $this->authorize('update',$project);
         $clients = Client::all();
         $users =  User::where('is_active','1')->get();
         $projects = Project::all();
@@ -78,7 +78,7 @@ class ProjectController extends Controller
      */
     public function update(Request $requests, Project $project, UpdatedProjectRequest $request)
     {
-        $this->authorize('update',User::class);
+        $this->authorize('update',$project);
         try {
             $project->update($request->validated());
             return Reply::success("Project updated successfully", 200, route('projects.index'));
@@ -92,7 +92,7 @@ class ProjectController extends Controller
      */
     public function destroy(Project $project)
     {
-        $this->authorize('delete',User::class);
+        $this->authorize('delete',$project);
         try {
             $project->delete();
             return Reply::success("Project deleted successfully", 200, route('projects.index'));

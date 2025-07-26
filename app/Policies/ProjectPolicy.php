@@ -21,7 +21,7 @@ class ProjectPolicy
      */
     public function specificView(User $user, Project $project): bool
     {
-        return $user->can('view-specific-task') || $user->id === $project->id;
+        return $user->can('view-specific-project') || $user->id === $project->id;
     }
 
     /**
@@ -29,7 +29,7 @@ class ProjectPolicy
      */
     public function create(User $user): bool
     {
-        return $user->create('create-project');
+        return $user->can('create-project');
     }
 
     /**
@@ -37,7 +37,7 @@ class ProjectPolicy
      */
     public function update(User $user, Project $project): bool
     {
-        return $user->create('update-project');
+        return $user->can('update-project');
     }
 
     /**
@@ -45,7 +45,7 @@ class ProjectPolicy
      */
     public function delete(User $user, Project $project): bool
     {
-        return $user->create('delete-project');
+        return $user->can('delete-project');
     }
 
     /**
